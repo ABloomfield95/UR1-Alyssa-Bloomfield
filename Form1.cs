@@ -6,5 +6,10 @@ namespace UR1_Alyssa_Bloomfield
         {
             InitializeComponent();
         }
+
+        private void InitializeComponent()
+        {
+
+        }
     }
 }
