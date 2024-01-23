@@ -6,6 +6,23 @@ namespace UR1_Alyssa_Bloomfield
 {
     public partial class Form1 : Form
     {
+
+        //Main capture object
+        VideoCapture mCapture;
+
+        //Video thread that allows multi-threading
+        Thread mCaptureThread;
+
+        //Allows for thread termination
+        CancellationTokenSource mCancellationToken = new();
+
+        //Indicator for the capturing state
+        bool mIsCapturing = false;
+
+        private Button StartStopBtn;
+        private PictureBox VideoPictureBox;
+
+
         public Form1()
         {
             InitializeComponent();
@@ -26,7 +43,7 @@ namespace UR1_Alyssa_Bloomfield
             StartStopBtn.TabIndex = 0;
             StartStopBtn.Text = "Start";
             StartStopBtn.UseVisualStyleBackColor = true;
-            StartStopBtn.Click += StartStopBtn_Click_1;
+            StartStopBtn.Click += StartStopBtn_Click;
             // 
             // VideoPictureBox
             // 
@@ -35,7 +52,6 @@ namespace UR1_Alyssa_Bloomfield
             VideoPictureBox.Size = new Size(744, 510);
             VideoPictureBox.TabIndex = 1;
             VideoPictureBox.TabStop = false;
-            VideoPictureBox.Click += VideoPictureBox_Click;
             // 
             // Form1
             // 
@@ -43,29 +59,12 @@ namespace UR1_Alyssa_Bloomfield
             Controls.Add(VideoPictureBox);
             Controls.Add(StartStopBtn);
             Name = "Form1";
+            Load += Form1_Load_1;
             ((System.ComponentModel.ISupportInitialize)VideoPictureBox).EndInit();
             ResumeLayout(false);
         }
 
-        public partial class Form1 : Form
-        {
-            //Main capture object
-            VideoCapture mCapture;
-
-            //Video thread that allows multi-threading
-            Thread mCaptureThread;
-
-            //Allows for thread termination
-            CancellationTokenSource mCallellationToken = new();
-
-            //Indicator for the capturing state
-            bool mIsCapturing = false;
-        }
-
-        private Button StartStopBtn;
-        private PictureBox VideoPictureBox;
-
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1_Load_1(object sender, EventArgs e)
         {
             try
             {
@@ -79,6 +78,8 @@ namespace UR1_Alyssa_Bloomfield
                 MessageBox.Show(ex.Message);
             }
         }
+
+
         private void StartStopBtn_Click(object sender, EventArgs e)
         {
             //Stop capturing if live 
@@ -92,14 +93,15 @@ namespace UR1_Alyssa_Bloomfield
             else
             {
                 mCancellationToken = new(); // reinitialize
-                
+
                 //Create a new thread(inilitize)
-                mCaptureThread = new(() => DisplayWebCam(mCancellationToken.Token)); 
-                mCapture.Thread.start();//start the feed
+                mCaptureThread = new(() => DisplayWebcam(mCancellationToken.Token));
+                mCaptureThread.Start();//start the feed
                 mIsCapturing = true; //indicate the state
                 StartStopBtn.Text = "Stop"; //infrom accordingly
             }
         }
+
         private void DisplayWebcam(CancellationToken token)
         {
             while (!token.IsCancellationRequested) //While no requested cancellation
@@ -107,17 +109,18 @@ namespace UR1_Alyssa_Bloomfield
                 Mat frame = mCapture.QueryFrame(); //grab a new frame
 
                 //resize picture box
-                int newHeight = frame(frame.Size.Height * PictureBox.Size.Width) / frame.Size.Width; 
-                Size newSize = new Size(PictureBox.Size.Width, newHeight);
-                CVInvoke.Resize(frame, frame, newSize);
+                int newHeight = (frame.Size.Height * VideoPictureBox.Size.Width) / frame.Size.Width;
+                Size newSize = new Size(VideoPictureBox.Size.Width, newHeight);
+                CvInvoke.Resize(frame, frame, newSize);
 
                 //Create a 60 fps frame rate
                 Task.Delay(16);
 
                 //Display the current frame
-                PictureBox.Image = frame.ToBitmap();
+                VideoPictureBox.Image = frame.ToBitmap();
             }
         }
+
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             //Dispose all processing threats to avoid orphanded processes
@@ -132,9 +135,6 @@ namespace UR1_Alyssa_Bloomfield
             }
         }
 
-        private void StartStopBtn_Click_1(object sender, EventArgs e)
-        {
-
-        }
+   
     }
 }
