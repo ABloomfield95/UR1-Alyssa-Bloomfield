@@ -14,39 +14,38 @@ namespace UR1_Alyssa_Bloomfield
         private void InitializeComponent()
         {
             StartStopBtn = new Button();
-            PictureBox = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)PictureBox).BeginInit();
+            VideoPictureBox = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)VideoPictureBox).BeginInit();
             SuspendLayout();
             // 
             // StartStopBtn
             // 
-            StartStopBtn.Location = new Point(1075, 777);
+            StartStopBtn.Location = new Point(967, 698);
             StartStopBtn.Name = "StartStopBtn";
-            StartStopBtn.Size = new Size(188, 58);
+            StartStopBtn.Size = new Size(207, 108);
             StartStopBtn.TabIndex = 0;
             StartStopBtn.Text = "Start";
             StartStopBtn.UseVisualStyleBackColor = true;
+            StartStopBtn.Click += StartStopBtn_Click_1;
             // 
-            // PictureBox
+            // VideoPictureBox
             // 
-            PictureBox.Location = new Point(51, 38);
-            PictureBox.Name = "PictureBox";
-            PictureBox.Size = new Size(750, 532);
-            PictureBox.TabIndex = 1;
-            PictureBox.TabStop = false;
+            VideoPictureBox.Location = new Point(109, 55);
+            VideoPictureBox.Name = "VideoPictureBox";
+            VideoPictureBox.Size = new Size(744, 510);
+            VideoPictureBox.TabIndex = 1;
+            VideoPictureBox.TabStop = false;
+            VideoPictureBox.Click += VideoPictureBox_Click;
             // 
             // Form1
             // 
             ClientSize = new Size(1335, 886);
-            Controls.Add(PictureBox);
+            Controls.Add(VideoPictureBox);
             Controls.Add(StartStopBtn);
             Name = "Form1";
-            ((System.ComponentModel.ISupportInitialize)PictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)VideoPictureBox).EndInit();
             ResumeLayout(false);
         }
-
-        private Button StartStopBtn;
-        private PictureBox PictureBox;
 
         public partial class Form1 : Form
         {
@@ -115,6 +114,19 @@ namespace UR1_Alyssa_Bloomfield
                 mCapture.Dispose();
                 mCancellationToken.Dispose();
             }
+        }
+
+        private Button StartStopBtn;
+        private PictureBox VideoPictureBox;
+
+        private void VideoPictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void StartStopBtn_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
