@@ -1,6 +1,4 @@
 using Emgu.CV;
-using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace UR1_Alyssa_Bloomfield
 {
@@ -153,7 +151,7 @@ namespace UR1_Alyssa_Bloomfield
                 Task.Delay(16);
 
                 //Display the current frame
-                VideoPictureBox.Image = frame.ToBitmap();
+                GrayPictureBox.Image = frame.ToBitmap();
             }
         }
 
