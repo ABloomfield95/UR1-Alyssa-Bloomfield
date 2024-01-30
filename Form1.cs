@@ -146,6 +146,7 @@ namespace UR1_Alyssa_Bloomfield
                 Size newSize = new Size(VideoPictureBox.Size.Width, newHeight);
                 CvInvoke.Resize(frame, frame, newSize);
 
+                CvInvoke.CvtColor(frame, frame, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
                 CvInvoke.Threshold(frame, frame, 150, 255, Emgu.CV.CvEnum.ThreasholdType.Binary);
 
                 //Create a 60 fps frame rate
