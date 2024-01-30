@@ -21,6 +21,7 @@ namespace UR1_Alyssa_Bloomfield
 
         private Button StartStopBtn;
         private PictureBox VideoPictureBox;
+        private PictureBox GrayPictureBox;
 
 
         public Form1()
@@ -28,16 +29,19 @@ namespace UR1_Alyssa_Bloomfield
             InitializeComponent();
         }
 
+        //Backend Setup given by MSVS
         private void InitializeComponent()
         {
             StartStopBtn = new Button();
             VideoPictureBox = new PictureBox();
+            GrayPictureBox = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)VideoPictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)GrayPictureBox).BeginInit();
             SuspendLayout();
             // 
             // StartStopBtn
             // 
-            StartStopBtn.Location = new Point(967, 698);
+            StartStopBtn.Location = new Point(313, 683);
             StartStopBtn.Name = "StartStopBtn";
             StartStopBtn.Size = new Size(207, 108);
             StartStopBtn.TabIndex = 0;
@@ -47,20 +51,30 @@ namespace UR1_Alyssa_Bloomfield
             // 
             // VideoPictureBox
             // 
-            VideoPictureBox.Location = new Point(109, 55);
+            VideoPictureBox.Location = new Point(37, 46);
             VideoPictureBox.Name = "VideoPictureBox";
-            VideoPictureBox.Size = new Size(744, 510);
+            VideoPictureBox.Size = new Size(789, 560);
             VideoPictureBox.TabIndex = 1;
             VideoPictureBox.TabStop = false;
             // 
+            // GrayPictureBox
+            // 
+            GrayPictureBox.Location = new Point(916, 46);
+            GrayPictureBox.Name = "GrayPictureBox";
+            GrayPictureBox.Size = new Size(789, 560);
+            GrayPictureBox.TabIndex = 2;
+            GrayPictureBox.TabStop = false;
+            // 
             // Form1
             // 
-            ClientSize = new Size(1335, 886);
+            ClientSize = new Size(1757, 886);
+            Controls.Add(GrayPictureBox);
             Controls.Add(VideoPictureBox);
             Controls.Add(StartStopBtn);
             Name = "Form1";
             Load += Form1_Load_1;
             ((System.ComponentModel.ISupportInitialize)VideoPictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)GrayPictureBox).EndInit();
             ResumeLayout(false);
         }
 
@@ -121,6 +135,27 @@ namespace UR1_Alyssa_Bloomfield
             }
         }
 
+        private void DisplayGrayWebcam(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested) //While no requested cancellation
+            {
+                Mat frame = mCapture.QueryFrame(); //grab a new frame
+
+                //resize picture box
+                int newHeight = (frame.Size.Height * VideoPictureBox.Size.Width) / frame.Size.Width;
+                Size newSize = new Size(VideoPictureBox.Size.Width, newHeight);
+                CvInvoke.Resize(frame, frame, newSize);
+
+                CvInvoke.Threshold(frame, frame, 150, 255, Emgu.CV.CvEnum.ThreasholdType.Binary);
+
+                //Create a 60 fps frame rate
+                Task.Delay(16);
+
+                //Display the current frame
+                VideoPictureBox.Image = frame.ToBitmap();
+            }
+        }
+
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             //Dispose all processing threats to avoid orphanded processes
@@ -135,6 +170,5 @@ namespace UR1_Alyssa_Bloomfield
             }
         }
 
-   
-    }
-}
+    } //public partial class Form1 parathensis
+} //namespace parathensis
