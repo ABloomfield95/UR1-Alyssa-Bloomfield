@@ -36,14 +36,24 @@ namespace UR1_Alyssa_Bloomfield
         {
             InitializeComponent();
         }
-        private void trackBar1_Scroll(object sender, EventArgs e)
-        {
 
+        private void trackBar1_Scroll(object sender, EventArgs e) //min
+        {
+            if (MinTrackBar.Value > MaxTrackBar.Value)
+            {
+                MaxTrackBar.Value = MinTrackBar.Value;
+            }
+
+            minGrayValue = MaxTrackBar.Value;
         }
 
-        private void trackBar2_Scroll(object sender, EventArgs e)
+        private void trackBar2_Scroll(object sender, EventArgs e) //max
         {
-
+            if (MinTrackBar.Value > MaxTrackBar.Value)
+            {
+                MinTrackBar.Value = MaxTrackBar.Value;
+            }
+            maxGrayValue = MaxTrackBar.Value;
         }
 
 
@@ -100,7 +110,7 @@ namespace UR1_Alyssa_Bloomfield
             // 
             // MaxTrackBar
             // 
-            MaxTrackBar.Location = new Point(1033, 794);
+            MaxTrackBar.Location = new Point(1033, 821);
             MaxTrackBar.Maximum = 255;
             MaxTrackBar.Minimum = 100;
             MaxTrackBar.Name = "MaxTrackBar";
@@ -118,6 +128,7 @@ namespace UR1_Alyssa_Bloomfield
             Controls.Add(VideoPictureBox);
             Controls.Add(StartStopBtn);
             Name = "Form1";
+            FormClosing += Form1_FormClosing;
             Load += Form1_Load_1;
             ((System.ComponentModel.ISupportInitialize)VideoPictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)GrayPictureBox).EndInit();
@@ -188,26 +199,16 @@ namespace UR1_Alyssa_Bloomfield
                 VideoPictureBox.Image = frame.ToBitmap();
 
                 CvInvoke.CvtColor(frame, frame, ColorConversion.Bgr2Gray);
-                CvInvoke.Threshold(frame, frame, minGrayValue,maxGrayValue,Emgu.CV.CvEnum.ThresholdType.Binary);
+                CvInvoke.Threshold(frame, frame, minGrayValue, maxGrayValue, Emgu.CV.CvEnum.ThresholdType.Binary);
                 GrayPictureBox.Image = frame.ToBitmap();
 
-                Invoke(new Action(() =>
-                    {
-                        if (MinTrackBar.Value > MaxTrackBar.Value)
-                        {
-                            MinTrackBar.Value = MaxTrackBar.Value;
-                        }
 
-                minGrayValue = MinTrackBar.Value;
-                maxGrayValue = MaxTrackBar.Value;
-                    }
-                ));
             } //while loop closer
         } //private void closer
 
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            mCaptureThread.Abort();
+            //mCaptureThread.Abort();
 
             //Dispose all processing threats to avoid orphanded processes
             if (mIsCapturing)
@@ -220,6 +221,5 @@ namespace UR1_Alyssa_Bloomfield
                 mCancellationToken.Dispose();
             }
         }
-
     } //public partial class Form1 parathensis
 } //namespace parathensis
