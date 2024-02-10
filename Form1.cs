@@ -1,10 +1,13 @@
 using Emgu.CV;
 using Emgu.CV.CvEnum;
+using Emgu.CV.Dai;
+using Emgu.CV.Structure;
 
 namespace UR1_Alyssa_Bloomfield
 {
     public partial class Form1 : Form
     {
+        private Mat frame;
 
         //Main capture object
         VideoCapture mCapture;
@@ -32,30 +35,16 @@ namespace UR1_Alyssa_Bloomfield
         private TrackBar MinTrackBar;
         private TrackBar MaxTrackBar;
 
+        private Label FarLeft;
+        private Label MidLeft;
+        private Label Middle;
+        private Label MidRight;
+        private Label FarRight;
+
         public Form1()
         {
             InitializeComponent();
         }
-
-        private void TrackBar1_Scroll(object sender, EventArgs e) //min
-        {
-            if (MinTrackBar.Value > MaxTrackBar.Value)
-            {
-                MaxTrackBar.Value = MinTrackBar.Value;
-            }
-
-            minGrayValue = MaxTrackBar.Value;
-        }
-
-        private void TrackBar2_Scroll(object sender, EventArgs e) //max
-        {
-            if (MinTrackBar.Value > MaxTrackBar.Value)
-            {
-                MinTrackBar.Value = MaxTrackBar.Value;
-            }
-            maxGrayValue = MaxTrackBar.Value;
-        }
-
 
         //Backend Setup given by MSVS
         private void InitializeComponent()
@@ -65,6 +54,11 @@ namespace UR1_Alyssa_Bloomfield
             GrayPictureBox = new PictureBox();
             MinTrackBar = new TrackBar();
             MaxTrackBar = new TrackBar();
+            FarLeft = new Label();
+            MidLeft = new Label();
+            Middle = new Label();
+            MidRight = new Label();
+            FarRight = new Label();
             ((System.ComponentModel.ISupportInitialize)VideoPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)GrayPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)MinTrackBar).BeginInit();
@@ -119,9 +113,64 @@ namespace UR1_Alyssa_Bloomfield
             MaxTrackBar.Value = 100;
             MaxTrackBar.Scroll += TrackBar2_Scroll;
             // 
+            // FarLeft
+            // 
+            FarLeft.AutoSize = true;
+            FarLeft.Location = new Point(1810, 46);
+            FarLeft.Name = "FarLeft";
+            FarLeft.Size = new Size(106, 41);
+            FarLeft.TabIndex = 5;
+            FarLeft.Text = "FarLeft";
+            FarLeft.Click += FarLeft_Click;
+            // 
+            // MidLeft
+            // 
+            MidLeft.AutoSize = true;
+            MidLeft.Location = new Point(1810, 160);
+            MidLeft.Name = "MidLeft";
+            MidLeft.Size = new Size(119, 41);
+            MidLeft.TabIndex = 7;
+            MidLeft.Text = "MidLeft";
+            MidLeft.Click += MidLeft_Click;
+            // 
+            // Middle
+            // 
+            Middle.AutoSize = true;
+            Middle.Location = new Point(1810, 271);
+            Middle.Name = "Middle";
+            Middle.Size = new Size(111, 41);
+            Middle.TabIndex = 9;
+            Middle.Text = "Middle";
+            Middle.Click += Middle_Click;
+            // 
+            // MidRight
+            // 
+            MidRight.AutoSize = true;
+            MidRight.Location = new Point(1810, 376);
+            MidRight.Name = "MidRight";
+            MidRight.Size = new Size(140, 41);
+            MidRight.TabIndex = 11;
+            MidRight.Text = "MidRight";
+            MidRight.Click += MidRight_Click;
+            // 
+            // FarRight
+            // 
+            FarRight.AutoSize = true;
+            FarRight.Location = new Point(1810, 485);
+            FarRight.Name = "FarRight";
+            FarRight.Size = new Size(127, 41);
+            FarRight.TabIndex = 13;
+            FarRight.Text = "FarRight";
+            FarRight.Click += FarRight_Click;
+            // 
             // Form1
             // 
-            ClientSize = new Size(1882, 984);
+            ClientSize = new Size(2332, 984);
+            Controls.Add(FarRight);
+            Controls.Add(MidRight);
+            Controls.Add(Middle);
+            Controls.Add(MidLeft);
+            Controls.Add(FarLeft);
             Controls.Add(MaxTrackBar);
             Controls.Add(MinTrackBar);
             Controls.Add(GrayPictureBox);
@@ -136,6 +185,25 @@ namespace UR1_Alyssa_Bloomfield
             ((System.ComponentModel.ISupportInitialize)MaxTrackBar).EndInit();
             ResumeLayout(false);
             PerformLayout();
+        }
+
+        private void TrackBar1_Scroll(object sender, EventArgs e) //min
+        {
+            if (MinTrackBar.Value > MaxTrackBar.Value)
+            {
+                MaxTrackBar.Value = MinTrackBar.Value;
+            }
+
+            minGrayValue = MaxTrackBar.Value;
+        }
+
+        private void TrackBar2_Scroll(object sender, EventArgs e) //max
+        {
+            if (MinTrackBar.Value > MaxTrackBar.Value)
+            {
+                MinTrackBar.Value = MaxTrackBar.Value;
+            }
+            maxGrayValue = MaxTrackBar.Value;
         }
 
         private void Form1_Load_1(object sender, EventArgs e)
@@ -153,7 +221,6 @@ namespace UR1_Alyssa_Bloomfield
                 MessageBox.Show(ex.Message);
             }
         }
-
 
         private void StartStopBtn_Click(object sender, EventArgs e)
         {
@@ -206,6 +273,107 @@ namespace UR1_Alyssa_Bloomfield
             } //while loop closer
         } //private void closer
 
+        private void FarLeft_Click(object sender, EventArgs e)
+        {
+            int whitePixelsExtended = 0;
+            Image<Gray, byte> img = frame.ToImage<Gray, byte>();
+            for (int x = 0; x < img.Width / 5; x++)
+            {
+                for (int y = 0; img.Height > y; y++)
+                {
+                    if (img.Data[y, x, 0] == 255)
+                    { whitePixelsExtended++; }
+                }
+            }
+
+            Invoke(new Action(() =>
+            {
+                FarLeft.Text = $"{whitePixelsExtended} White Pixels";
+            }
+            ));
+        }//FarLeft_Click parathensis
+
+        private void MidLeft_Click(object sender, EventArgs e)
+        {
+            int whitePixelsExtended = 0;
+            Image<Gray, byte> img = frame.ToImage<Gray, byte>();
+            for (int x = img.Width / 5; x < 2 * (img.Width / 5); x++)
+            {
+                for (int y = 0; img.Height > y; y++)
+                {
+                    if (img.Data[y, x, 0] == 255)
+                    { whitePixelsExtended++; }
+                }
+            }
+
+            Invoke(new Action(() =>
+            {
+                MidLeft.Text = $"{whitePixelsExtended} White Pixels";
+            }
+            ));
+        }//MidLeft Parathensis
+
+        private void Middle_Click(object sender, EventArgs e)
+        {
+            int whitePixelsExtended = 0;
+            Image<Gray, byte> img = frame.ToImage<Gray, byte>();
+            for (int x = 2 * (img.Width / 5); x < 3 * (img.Width / 5); x++)
+            {
+                for (int y = 0; img.Height > y; y++)
+                {
+                    if (img.Data[y, x, 0] == 255)
+                    { whitePixelsExtended++; }
+                }
+            }
+
+            Invoke(new Action(() =>
+            {
+                Middle.Text = $"{whitePixelsExtended} White Pixels";
+            }
+            ));
+        }//Middle Parathensis
+
+        private void MidRight_Click(object sender, EventArgs e)
+        {
+            int whitePixelsExtended = 0;
+            Image<Gray, byte> img = frame.ToImage<Gray, byte>();
+            for (int x = 3 * (img.Width / 5); x < 4 * (img.Width / 5); x++)
+            {
+                for (int y = 0; img.Height > y; y++)
+                {
+                    if (img.Data[y, x, 0] == 255)
+                    { whitePixelsExtended++; }
+                }
+            }
+
+            Invoke(new Action(() =>
+            {
+                MidRight.Text = $"{whitePixelsExtended} White Pixels";
+            }
+            ));
+        }//MidRight Click parathensis
+
+        private void FarRight_Click(object sender, EventArgs e)
+        {
+            int whitePixelsExtended = 0;
+            Image<Gray, byte> img = frame.ToImage<Gray, byte>();
+            for (int x = 5 * (img.Width / 5); x < img.Width; x++)
+            {
+                for (int y = 0; img.Height > y; y++)
+                {
+                    if (img.Data[y, x, 0] == 255)
+                    { whitePixelsExtended++; }
+                }
+            }
+
+            Invoke(new Action(() =>
+            {
+                FarRight.Text = $"{whitePixelsExtended} White Pixels";
+            }
+            ));
+        }//FarRight Click Parathensis
+
+
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             //mCaptureThread.Abort();
@@ -221,5 +389,6 @@ namespace UR1_Alyssa_Bloomfield
                 mCancellationToken.Dispose();
             }
         }
+
     } //public partial class Form1 parathensis
 } //namespace parathensis
