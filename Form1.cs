@@ -21,7 +21,7 @@ namespace UR1_Alyssa_Bloomfield
         private Button StartStopBtn;
         private PictureBox VideoPictureBox;
 
-        CancellationTokenSource _CancellationToken = new();
+        //CancellationTokenSource _CancellationToken = new();
 
         //For the black and white picture box
         private PictureBox GrayPictureBox;
@@ -37,7 +37,7 @@ namespace UR1_Alyssa_Bloomfield
             InitializeComponent();
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e) //min
+        private void TrackBar1_Scroll(object sender, EventArgs e) //min
         {
             if (MinTrackBar.Value > MaxTrackBar.Value)
             {
@@ -47,7 +47,7 @@ namespace UR1_Alyssa_Bloomfield
             minGrayValue = MaxTrackBar.Value;
         }
 
-        private void trackBar2_Scroll(object sender, EventArgs e) //max
+        private void TrackBar2_Scroll(object sender, EventArgs e) //max
         {
             if (MinTrackBar.Value > MaxTrackBar.Value)
             {
@@ -99,25 +99,25 @@ namespace UR1_Alyssa_Bloomfield
             // 
             // MinTrackBar
             // 
-            MinTrackBar.Location = new Point(1033, 655);
+            MinTrackBar.Location = new Point(916, 653);
             MinTrackBar.Maximum = 255;
             MinTrackBar.Minimum = 100;
             MinTrackBar.Name = "MinTrackBar";
-            MinTrackBar.Size = new Size(545, 114);
+            MinTrackBar.Size = new Size(789, 114);
             MinTrackBar.TabIndex = 3;
             MinTrackBar.Value = 100;
-            MinTrackBar.Scroll += trackBar1_Scroll;
+            MinTrackBar.Scroll += TrackBar1_Scroll;
             // 
             // MaxTrackBar
             // 
-            MaxTrackBar.Location = new Point(1033, 821);
+            MaxTrackBar.Location = new Point(916, 821);
             MaxTrackBar.Maximum = 255;
             MaxTrackBar.Minimum = 100;
             MaxTrackBar.Name = "MaxTrackBar";
-            MaxTrackBar.Size = new Size(545, 114);
+            MaxTrackBar.Size = new Size(789, 114);
             MaxTrackBar.TabIndex = 4;
             MaxTrackBar.Value = 100;
-            MaxTrackBar.Scroll += trackBar2_Scroll;
+            MaxTrackBar.Scroll += TrackBar2_Scroll;
             // 
             // Form1
             // 
@@ -189,11 +189,11 @@ namespace UR1_Alyssa_Bloomfield
                 CvInvoke.Resize(frame, frame, newSize);
 
                 //resize gray picture box
-                int newGHeight = (frame.Size.Height * GrayPictureBox.Size.Width) / frame.Size.Width;
-                Size newGSize = new Size(GrayPictureBox.Size.Width, newHeight);
+                //int newGHeight = (frame.Size.Height * GrayPictureBox.Size.Width) / frame.Size.Width;
+                //Size newGSize = new Size(GrayPictureBox.Size.Width, newHeight);
 
                 //Create a 60 fps frame rate
-                Task.Delay(16);
+                //Task.Delay(16);
 
                 //Display the current frame
                 VideoPictureBox.Image = frame.ToBitmap();
