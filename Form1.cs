@@ -1,6 +1,5 @@
 using Emgu.CV;
 using Emgu.CV.CvEnum;
-using Emgu.CV.Dai;
 using Emgu.CV.Structure;
 
 namespace UR1_Alyssa_Bloomfield
@@ -187,6 +186,22 @@ namespace UR1_Alyssa_Bloomfield
             PerformLayout();
         }
 
+        private void Form1_Load_1(object sender, EventArgs e)
+        {
+            try
+            {
+                //Initailize with the plugged camera
+                mCapture = new VideoCapture(0);
+
+                if (mCapture.Height == 0)
+                    throw new Exception("No Cameras Found");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void TrackBar1_Scroll(object sender, EventArgs e) //min
         {
             if (MinTrackBar.Value > MaxTrackBar.Value)
@@ -204,22 +219,6 @@ namespace UR1_Alyssa_Bloomfield
                 MinTrackBar.Value = MaxTrackBar.Value;
             }
             maxGrayValue = MaxTrackBar.Value;
-        }
-
-        private void Form1_Load_1(object sender, EventArgs e)
-        {
-            try
-            {
-                //Initailize with the plugged camera
-                mCapture = new VideoCapture(0);
-
-                if (mCapture.Height == 0)
-                    throw new Exception("No Cameras Found");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
         }
 
         private void StartStopBtn_Click(object sender, EventArgs e)
@@ -250,127 +249,141 @@ namespace UR1_Alyssa_Bloomfield
             {
                 Mat frame = mCapture.QueryFrame(); //grab a new frame
 
+                if (frame == null)
+                {
+                    continue;
+                }
                 //resize picture box
                 int newHeight = (frame.Size.Height * VideoPictureBox.Size.Width) / frame.Size.Width;
-                Size newSize = new Size(VideoPictureBox.Size.Width, newHeight);
+                Size newSize = new(VideoPictureBox.Size.Width, newHeight);
                 CvInvoke.Resize(frame, frame, newSize);
 
-                //resize gray picture box
-                //int newGHeight = (frame.Size.Height * GrayPictureBox.Size.Width) / frame.Size.Width;
-                //Size newGSize = new Size(GrayPictureBox.Size.Width, newHeight);
-
                 //Create a 60 fps frame rate
-                //Task.Delay(16);
+                Task.Delay(16);
 
                 //Display the current frame
                 VideoPictureBox.Image = frame.ToBitmap();
 
+                //Modifications to change the second frame
                 CvInvoke.CvtColor(frame, frame, ColorConversion.Bgr2Gray);
                 CvInvoke.Threshold(frame, frame, minGrayValue, maxGrayValue, Emgu.CV.CvEnum.ThresholdType.Binary);
                 GrayPictureBox.Image = frame.ToBitmap();
-
-
             } //while loop closer
         } //private void closer
 
         private void FarLeft_Click(object sender, EventArgs e)
         {
-            int whitePixelsExtended = 0;
-            Image<Gray, byte> img = frame.ToImage<Gray, byte>();
-            for (int x = 0; x < img.Width / 5; x++)
+            if (frame != null)
             {
-                for (int y = 0; img.Height > y; y++)
+                int whitePixelsExtended = 0;
+                Image<Gray, byte> img = frame.ToImage<Gray, byte>();
+                for (int x = 0; x < img.Width / 5; x++)
                 {
-                    if (img.Data[y, x, 0] == 255)
-                    { whitePixelsExtended++; }
+                    for (int y = 0; img.Height > y; y++)
+                    {
+                        if (img.Data[y, x, 0] == 255)
+                        { whitePixelsExtended++; }
+                    }
                 }
-            }
 
-            Invoke(new Action(() =>
-            {
-                FarLeft.Text = $"{whitePixelsExtended} White Pixels";
+                Invoke(new Action(() =>
+                {
+                    FarLeft.Text = $"{whitePixelsExtended} White Pixels";
+                }
+                ));
             }
-            ));
         }//FarLeft_Click parathensis
 
         private void MidLeft_Click(object sender, EventArgs e)
         {
-            int whitePixelsExtended = 0;
-            Image<Gray, byte> img = frame.ToImage<Gray, byte>();
-            for (int x = img.Width / 5; x < 2 * (img.Width / 5); x++)
+            if (frame != null)
             {
-                for (int y = 0; img.Height > y; y++)
+                int whitePixelsExtended = 0;
+                Image<Gray, byte> img = frame.ToImage<Gray, byte>();
+                for (int x = img.Width / 5; x < 2 * (img.Width / 5); x++)
                 {
-                    if (img.Data[y, x, 0] == 255)
-                    { whitePixelsExtended++; }
+                    for (int y = 0; img.Height > y; y++)
+                    {
+                        if (img.Data[y, x, 0] == 255)
+                        { whitePixelsExtended++; }
+                    }
                 }
-            }
 
-            Invoke(new Action(() =>
-            {
-                MidLeft.Text = $"{whitePixelsExtended} White Pixels";
+                Invoke(new Action(() =>
+                {
+                    MidLeft.Text = $"{whitePixelsExtended} White Pixels";
+                }
+                ));
             }
-            ));
         }//MidLeft Parathensis
 
         private void Middle_Click(object sender, EventArgs e)
         {
-            int whitePixelsExtended = 0;
-            Image<Gray, byte> img = frame.ToImage<Gray, byte>();
-            for (int x = 2 * (img.Width / 5); x < 3 * (img.Width / 5); x++)
+            if (frame != null)
             {
-                for (int y = 0; img.Height > y; y++)
+                int whitePixelsExtended = 0;
+                Image<Gray, byte> img = frame.ToImage<Gray, byte>();
+                for (int x = 2 * (img.Width / 5); x < 3 * (img.Width / 5); x++)
                 {
-                    if (img.Data[y, x, 0] == 255)
-                    { whitePixelsExtended++; }
+                    for (int y = 0; img.Height > y; y++)
+                    {
+                        if (img.Data[y, x, 0] == 255)
+                        { whitePixelsExtended++; }
+                    }
                 }
-            }
 
-            Invoke(new Action(() =>
-            {
-                Middle.Text = $"{whitePixelsExtended} White Pixels";
+                Invoke(new Action(() =>
+                {
+                    Middle.Text = $"{whitePixelsExtended} White Pixels";
+                }
+                ));
             }
-            ));
         }//Middle Parathensis
 
         private void MidRight_Click(object sender, EventArgs e)
         {
-            int whitePixelsExtended = 0;
-            Image<Gray, byte> img = frame.ToImage<Gray, byte>();
-            for (int x = 3 * (img.Width / 5); x < 4 * (img.Width / 5); x++)
+            if (frame != null)
             {
-                for (int y = 0; img.Height > y; y++)
+                int whitePixelsExtended = 0;
+                Image<Gray, byte> img = frame.ToImage<Gray, byte>();
+                for (int x = 3 * (img.Width / 5); x < 4 * (img.Width / 5); x++)
                 {
-                    if (img.Data[y, x, 0] == 255)
-                    { whitePixelsExtended++; }
+                    for (int y = 0; img.Height > y; y++)
+                    {
+                        if (img.Data[y, x, 0] == 255)
+                        { whitePixelsExtended++; }
+                    }
                 }
-            }
 
-            Invoke(new Action(() =>
-            {
-                MidRight.Text = $"{whitePixelsExtended} White Pixels";
+                Invoke(new Action(() =>
+                {
+                    MidRight.Text = $"{whitePixelsExtended} White Pixels";
+                }
+                ));
             }
-            ));
         }//MidRight Click parathensis
 
         private void FarRight_Click(object sender, EventArgs e)
         {
-            int whitePixelsExtended = 0;
-            Image<Gray, byte> img = frame.ToImage<Gray, byte>();
-            for (int x = 5 * (img.Width / 5); x < img.Width; x++)
+            if (frame != null)
             {
-                for (int y = 0; img.Height > y; y++)
+                int whitePixelsExtended = 0;
+                Image<Gray, byte> img = frame.ToImage<Gray, byte>();
+                for (int x = 5 * (img.Width / 5); x < img.Width; x++)
                 {
-                    if (img.Data[y, x, 0] == 255)
-                    { whitePixelsExtended++; }
+                    for (int y = 0; img.Height > y; y++)
+                    {
+                        if (img.Data[y, x, 0] == 255)
+                            whitePixelsExtended++;
+                    }
                 }
-            }
 
-            Invoke(new Action(() =>
-            {
-                FarRight.Text = $"{whitePixelsExtended} White Pixels";
+                Invoke(new Action(() =>
+                {
+                    FarRight.Text = $"{whitePixelsExtended} White Pixels";
+                }
+                ));
             }
-            ));
         }//FarRight Click Parathensis
 
 
