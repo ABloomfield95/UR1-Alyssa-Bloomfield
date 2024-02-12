@@ -5,9 +5,7 @@ using Emgu.CV.Structure;
 namespace UR1_Alyssa_Bloomfield
 {
     public partial class Form1 : Form
-    {
-        private Mat frame;
-
+    { 
         //Main capture object
         VideoCapture mCapture;
 
@@ -253,6 +251,7 @@ namespace UR1_Alyssa_Bloomfield
                 {
                     continue;
                 }
+
                 //resize picture box
                 int newHeight = (frame.Size.Height * VideoPictureBox.Size.Width) / frame.Size.Width;
                 Size newSize = new(VideoPictureBox.Size.Width, newHeight);
@@ -268,122 +267,121 @@ namespace UR1_Alyssa_Bloomfield
                 CvInvoke.CvtColor(frame, frame, ColorConversion.Bgr2Gray);
                 CvInvoke.Threshold(frame, frame, minGrayValue, maxGrayValue, Emgu.CV.CvEnum.ThresholdType.Binary);
                 GrayPictureBox.Image = frame.ToBitmap();
+
+                //Far Left Pixels
+                int whitePixelsFarLeft = 0;
+                Image<Gray, byte> img = frame.ToImage<Gray, byte>();
+                for (int x = 0; x < frame.Width / 5; x++)
+                {
+                    for (int y = 0; frame.Height > y; y++)
+                    {
+                        if (img.Data[y, x, 0] == 255)
+                            whitePixelsFarLeft++; 
+                    }
+                }
+
+                Invoke(new Action(() =>
+                {
+                    FarLeft.Text = $"{whitePixelsFarLeft} White Pixels";
+                }));
+
+
+                //Mid Left Pixels
+                int whitePixelsMidLeft = 0;
+                Image<Gray, byte> img2 = frame.ToImage<Gray, byte>();
+                for (int x = frame.Width / 5; x < 2 * (frame.Width / 5); x++)
+                {
+                    for (int y = 0; frame.Height > y; y++)
+                    {
+                        if (img2.Data[y, x, 0] == 255)
+                            whitePixelsMidLeft++; 
+                    }
+                }
+
+                Invoke(new Action(() =>
+                {
+                        MidLeft.Text = $"{whitePixelsMidLeft} White Pixels";
+                }));
+
+
+                //Middle Pixels
+                int whitePixelsMid = 0;
+                Image<Gray, byte> img3 = frame.ToImage<Gray, byte>();
+                for (int x = 2 * (frame.Width / 5); x < 3 * (frame.Width / 5); x++)
+                {
+                    for (int y = 0; frame.Height > y; y++)
+                    {
+                        if (img3.Data[y, x, 0] == 255)
+                        { whitePixelsMid++; }
+                    }
+                }
+
+                Invoke(new Action(() =>
+                {
+                    Middle.Text = $"{whitePixelsMid} White Pixels";
+                }));
+
+
+                //Mid Right Pixels
+                int whitePixelsMidRight = 0;
+                Image<Gray, byte> img4 = frame.ToImage<Gray, byte>();
+                for (int x = 3 * (frame.Width / 5); x < 4 * (frame.Width / 5); x++)
+                {
+                    for (int y = 0; frame.Height > y; y++)
+                    {
+                        if (img4.Data[y, x, 0] == 255)
+                        { whitePixelsMidRight++; }
+                    }
+                }
+
+                Invoke(new Action(() =>
+                {
+                    MidRight.Text = $"{whitePixelsMidRight} White Pixels";
+                }));
+
+
+                //Far Right Pixels
+                int whitePixelsFarRight = 0;
+                Image<Gray, byte> img5 = frame.ToImage<Gray, byte>();
+                for (int x = 5 * (frame.Width / 5); x < frame.Width; x++)
+                {
+                    for (int y = 0; frame.Height > y; y++)
+                    {
+                        if (img5.Data[y, x, 0] == 255)
+                            whitePixelsFarRight++;
+                    }
+                }
+
+                Invoke(new Action(() =>
+                {
+                    FarRight.Text = $"{whitePixelsFarRight} White Pixels";
+                }));
             } //while loop closer
         } //private void closer
 
         private void FarLeft_Click(object sender, EventArgs e)
         {
-            if (frame != null)
-            {
-                int whitePixelsExtended = 0;
-                Image<Gray, byte> img = frame.ToImage<Gray, byte>();
-                for (int x = 0; x < img.Width / 5; x++)
-                {
-                    for (int y = 0; img.Height > y; y++)
-                    {
-                        if (img.Data[y, x, 0] == 255)
-                        { whitePixelsExtended++; }
-                    }
-                }
-
-                Invoke(new Action(() =>
-                {
-                    FarLeft.Text = $"{whitePixelsExtended} White Pixels";
-                }
-                ));
-            }
+          
         }//FarLeft_Click parathensis
 
         private void MidLeft_Click(object sender, EventArgs e)
         {
-            if (frame != null)
-            {
-                int whitePixelsExtended = 0;
-                Image<Gray, byte> img = frame.ToImage<Gray, byte>();
-                for (int x = img.Width / 5; x < 2 * (img.Width / 5); x++)
-                {
-                    for (int y = 0; img.Height > y; y++)
-                    {
-                        if (img.Data[y, x, 0] == 255)
-                        { whitePixelsExtended++; }
-                    }
-                }
-
-                Invoke(new Action(() =>
-                {
-                    MidLeft.Text = $"{whitePixelsExtended} White Pixels";
-                }
-                ));
-            }
+          
         }//MidLeft Parathensis
 
         private void Middle_Click(object sender, EventArgs e)
         {
-            if (frame != null)
-            {
-                int whitePixelsExtended = 0;
-                Image<Gray, byte> img = frame.ToImage<Gray, byte>();
-                for (int x = 2 * (img.Width / 5); x < 3 * (img.Width / 5); x++)
-                {
-                    for (int y = 0; img.Height > y; y++)
-                    {
-                        if (img.Data[y, x, 0] == 255)
-                        { whitePixelsExtended++; }
-                    }
-                }
 
-                Invoke(new Action(() =>
-                {
-                    Middle.Text = $"{whitePixelsExtended} White Pixels";
-                }
-                ));
-            }
         }//Middle Parathensis
 
         private void MidRight_Click(object sender, EventArgs e)
         {
-            if (frame != null)
-            {
-                int whitePixelsExtended = 0;
-                Image<Gray, byte> img = frame.ToImage<Gray, byte>();
-                for (int x = 3 * (img.Width / 5); x < 4 * (img.Width / 5); x++)
-                {
-                    for (int y = 0; img.Height > y; y++)
-                    {
-                        if (img.Data[y, x, 0] == 255)
-                        { whitePixelsExtended++; }
-                    }
-                }
-
-                Invoke(new Action(() =>
-                {
-                    MidRight.Text = $"{whitePixelsExtended} White Pixels";
-                }
-                ));
-            }
+            
         }//MidRight Click parathensis
 
         private void FarRight_Click(object sender, EventArgs e)
         {
-            if (frame != null)
-            {
-                int whitePixelsExtended = 0;
-                Image<Gray, byte> img = frame.ToImage<Gray, byte>();
-                for (int x = 5 * (img.Width / 5); x < img.Width; x++)
-                {
-                    for (int y = 0; img.Height > y; y++)
-                    {
-                        if (img.Data[y, x, 0] == 255)
-                            whitePixelsExtended++;
-                    }
-                }
-
-                Invoke(new Action(() =>
-                {
-                    FarRight.Text = $"{whitePixelsExtended} White Pixels";
-                }
-                ));
-            }
+           
         }//FarRight Click Parathensis
 
 
