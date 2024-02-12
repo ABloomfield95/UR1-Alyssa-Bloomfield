@@ -259,7 +259,7 @@ namespace UR1_Alyssa_Bloomfield
                 CvInvoke.Resize(frame, frame, newSize);
 
                 //Create a 60 fps frame rate
-                Task.Delay(16);
+                _ = Task.Delay(16);
 
                 //Display the current frame
                 VideoPictureBox.Image = frame.ToBitmap();
