@@ -5,7 +5,7 @@ using Emgu.CV.Structure;
 namespace UR1_Alyssa_Bloomfield
 {
     public partial class Form1 : Form
-    { 
+    {
         //Main capture object
         VideoCapture mCapture;
 
@@ -32,7 +32,15 @@ namespace UR1_Alyssa_Bloomfield
         private TrackBar MinTrackBar;
         private TrackBar MaxTrackBar;
 
-        private Label FarLeft;
+        //Textbox headers for the pixel counts
+        private TextBox FL_Text_Label1;
+        private TextBox ML_Text_Label;
+        private TextBox M_Text_Label;
+        private TextBox MR_Text_Label;
+        private TextBox FR_Text_Label;
+
+        //Labels that will display the pixel count
+        private Label FL_Text_Label;
         private Label MidLeft;
         private Label Middle;
         private Label MidRight;
@@ -51,11 +59,16 @@ namespace UR1_Alyssa_Bloomfield
             GrayPictureBox = new PictureBox();
             MinTrackBar = new TrackBar();
             MaxTrackBar = new TrackBar();
-            FarLeft = new Label();
+            FL_Text_Label = new Label();
             MidLeft = new Label();
             Middle = new Label();
             MidRight = new Label();
             FarRight = new Label();
+            FL_Text_Label1 = new TextBox();
+            ML_Text_Label = new TextBox();
+            M_Text_Label = new TextBox();
+            MR_Text_Label = new TextBox();
+            FR_Text_Label = new TextBox();
             ((System.ComponentModel.ISupportInitialize)VideoPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)GrayPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)MinTrackBar).BeginInit();
@@ -110,20 +123,20 @@ namespace UR1_Alyssa_Bloomfield
             MaxTrackBar.Value = 100;
             MaxTrackBar.Scroll += TrackBar2_Scroll;
             // 
-            // FarLeft
+            // FL_Text_Label
             // 
-            FarLeft.AutoSize = true;
-            FarLeft.Location = new Point(1810, 46);
-            FarLeft.Name = "FarLeft";
-            FarLeft.Size = new Size(106, 41);
-            FarLeft.TabIndex = 5;
-            FarLeft.Text = "FarLeft";
-            FarLeft.Click += FarLeft_Click;
+            FL_Text_Label.AutoSize = true;
+            FL_Text_Label.Location = new Point(1810, 96);
+            FL_Text_Label.Name = "FL_Text_Label";
+            FL_Text_Label.Size = new Size(106, 41);
+            FL_Text_Label.TabIndex = 5;
+            FL_Text_Label.Text = "FarLeft";
+            FL_Text_Label.Click += FarLeft_Click;
             // 
             // MidLeft
             // 
             MidLeft.AutoSize = true;
-            MidLeft.Location = new Point(1810, 160);
+            MidLeft.Location = new Point(1810, 216);
             MidLeft.Name = "MidLeft";
             MidLeft.Size = new Size(119, 41);
             MidLeft.TabIndex = 7;
@@ -133,7 +146,7 @@ namespace UR1_Alyssa_Bloomfield
             // Middle
             // 
             Middle.AutoSize = true;
-            Middle.Location = new Point(1810, 271);
+            Middle.Location = new Point(1810, 330);
             Middle.Name = "Middle";
             Middle.Size = new Size(111, 41);
             Middle.TabIndex = 9;
@@ -143,7 +156,7 @@ namespace UR1_Alyssa_Bloomfield
             // MidRight
             // 
             MidRight.AutoSize = true;
-            MidRight.Location = new Point(1810, 376);
+            MidRight.Location = new Point(1810, 454);
             MidRight.Name = "MidRight";
             MidRight.Size = new Size(140, 41);
             MidRight.TabIndex = 11;
@@ -153,21 +166,66 @@ namespace UR1_Alyssa_Bloomfield
             // FarRight
             // 
             FarRight.AutoSize = true;
-            FarRight.Location = new Point(1810, 485);
+            FarRight.Location = new Point(1802, 565);
             FarRight.Name = "FarRight";
             FarRight.Size = new Size(127, 41);
             FarRight.TabIndex = 13;
             FarRight.Text = "FarRight";
             FarRight.Click += FarRight_Click;
             // 
+            // FL_Text_Label1
+            // 
+            FL_Text_Label1.Location = new Point(1810, 46);
+            FL_Text_Label1.Name = "FL_Text_Label1";
+            FL_Text_Label1.Size = new Size(263, 47);
+            FL_Text_Label1.TabIndex = 14;
+            FL_Text_Label1.Text = "Far Left Pixel Count";
+            // 
+            // ML_Text_Label
+            // 
+            ML_Text_Label.Location = new Point(1810, 166);
+            ML_Text_Label.Name = "ML_Text_Label";
+            ML_Text_Label.Size = new Size(317, 47);
+            ML_Text_Label.TabIndex = 15;
+            ML_Text_Label.Text = "Middle Left Pixel Count";
+            // 
+            // M_Text_Label
+            // 
+            M_Text_Label.Location = new Point(1810, 291);
+            M_Text_Label.Name = "M_Text_Label";
+            M_Text_Label.Size = new Size(263, 47);
+            M_Text_Label.TabIndex = 16;
+            M_Text_Label.Text = "Middle Pixel Count";
+            // 
+            // MR_Text_Label
+            // 
+            MR_Text_Label.Location = new Point(1810, 404);
+            MR_Text_Label.Name = "MR_Text_Label";
+            MR_Text_Label.Size = new Size(342, 47);
+            MR_Text_Label.TabIndex = 17;
+            MR_Text_Label.Text = "Middle Right Pixel Count";
+            // 
+            // FR_Text_Label
+            // 
+            FR_Text_Label.Location = new Point(1802, 524);
+            FR_Text_Label.Name = "FR_Text_Label";
+            FR_Text_Label.Size = new Size(283, 47);
+            FR_Text_Label.TabIndex = 18;
+            FR_Text_Label.Text = "Far Right Pixel Count";
+            // 
             // Form1
             // 
             ClientSize = new Size(2332, 984);
+            Controls.Add(FR_Text_Label);
+            Controls.Add(MR_Text_Label);
+            Controls.Add(M_Text_Label);
+            Controls.Add(ML_Text_Label);
+            Controls.Add(FL_Text_Label1);
             Controls.Add(FarRight);
             Controls.Add(MidRight);
             Controls.Add(Middle);
             Controls.Add(MidLeft);
-            Controls.Add(FarLeft);
+            Controls.Add(FL_Text_Label);
             Controls.Add(MaxTrackBar);
             Controls.Add(MinTrackBar);
             Controls.Add(GrayPictureBox);
@@ -276,13 +334,13 @@ namespace UR1_Alyssa_Bloomfield
                     for (int y = 0; frame.Height > y; y++)
                     {
                         if (img.Data[y, x, 0] == 255)
-                            whitePixelsFarLeft++; 
+                            whitePixelsFarLeft++;
                     }
                 }
 
                 Invoke(new Action(() =>
                 {
-                    FarLeft.Text = $"{whitePixelsFarLeft} White Pixels";
+                    FL_Text_Label.Text = $"{whitePixelsFarLeft} White Pixels";
                 }));
 
 
@@ -294,13 +352,13 @@ namespace UR1_Alyssa_Bloomfield
                     for (int y = 0; frame.Height > y; y++)
                     {
                         if (img2.Data[y, x, 0] == 255)
-                            whitePixelsMidLeft++; 
+                            whitePixelsMidLeft++;
                     }
                 }
 
                 Invoke(new Action(() =>
                 {
-                        MidLeft.Text = $"{whitePixelsMidLeft} White Pixels";
+                    MidLeft.Text = $"{whitePixelsMidLeft} White Pixels";
                 }));
 
 
@@ -361,12 +419,12 @@ namespace UR1_Alyssa_Bloomfield
 
         private void FarLeft_Click(object sender, EventArgs e)
         {
-          
+
         }//FarLeft_Click parathensis
 
         private void MidLeft_Click(object sender, EventArgs e)
         {
-          
+
         }//MidLeft Parathensis
 
         private void Middle_Click(object sender, EventArgs e)
@@ -376,12 +434,12 @@ namespace UR1_Alyssa_Bloomfield
 
         private void MidRight_Click(object sender, EventArgs e)
         {
-            
+
         }//MidRight Click parathensis
 
         private void FarRight_Click(object sender, EventArgs e)
         {
-           
+
         }//FarRight Click Parathensis
 
 
@@ -400,6 +458,5 @@ namespace UR1_Alyssa_Bloomfield
                 mCancellationToken.Dispose();
             }
         }
-
     } //public partial class Form1 parathensis
 } //namespace parathensis
