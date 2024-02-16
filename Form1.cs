@@ -46,6 +46,23 @@ namespace UR1_Alyssa_Bloomfield
         private Label MidRight;
         private Label FarRight;
 
+        //Info for HSV Modifications
+        private PictureBox HPictureBox;
+        private PictureBox SPictureBox;
+        private PictureBox VPictureBox;
+        private TrackBar HValueMin;
+        private TrackBar HValMax;
+        private TrackBar SValMin;
+        private TrackBar SValMax;
+        private TrackBar VValMin;
+        private TrackBar VValMax;
+        private TextBox RI_Text;
+        private TextBox BM_Text;
+        private PictureBox HSVPictureBox;
+        private TextBox HSV_Text;
+
+
+
         public Form1()
         {
             InitializeComponent();
@@ -69,10 +86,33 @@ namespace UR1_Alyssa_Bloomfield
             M_Text_Label = new TextBox();
             MR_Text_Label = new TextBox();
             FR_Text_Label = new TextBox();
+            HPictureBox = new PictureBox();
+            SPictureBox = new PictureBox();
+            VPictureBox = new PictureBox();
+            HValueMin = new TrackBar();
+            HValMax = new TrackBar();
+            SValMin = new TrackBar();
+            SValMax = new TrackBar();
+            VValMin = new TrackBar();
+            VValMax = new TrackBar();
+            RI_Text = new TextBox();
+            BM_Text = new TextBox();
+            HSVPictureBox = new PictureBox();
+            HSV_Text = new TextBox();
             ((System.ComponentModel.ISupportInitialize)VideoPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)GrayPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)MinTrackBar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)MaxTrackBar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)HPictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SPictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)VPictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)HValueMin).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)HValMax).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SValMin).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SValMax).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)VValMin).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)VValMax).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)HSVPictureBox).BeginInit();
             SuspendLayout();
             // 
             // StartStopBtn
@@ -103,7 +143,7 @@ namespace UR1_Alyssa_Bloomfield
             // 
             // MinTrackBar
             // 
-            MinTrackBar.Location = new Point(916, 653);
+            MinTrackBar.Location = new Point(916, 674);
             MinTrackBar.Maximum = 255;
             MinTrackBar.Minimum = 100;
             MinTrackBar.Name = "MinTrackBar";
@@ -213,9 +253,142 @@ namespace UR1_Alyssa_Bloomfield
             FR_Text_Label.TabIndex = 18;
             FR_Text_Label.Text = "Far Right Pixel Count";
             // 
+            // HPictureBox
+            // 
+            HPictureBox.Location = new Point(2502, 46);
+            HPictureBox.Name = "HPictureBox";
+            HPictureBox.Size = new Size(436, 281);
+            HPictureBox.TabIndex = 19;
+            HPictureBox.TabStop = false;
+            HPictureBox.Click += HPictureBox_Click;
+            // 
+            // SPictureBox
+            // 
+            SPictureBox.Location = new Point(2502, 538);
+            SPictureBox.Name = "SPictureBox";
+            SPictureBox.Size = new Size(436, 281);
+            SPictureBox.TabIndex = 20;
+            SPictureBox.TabStop = false;
+            SPictureBox.Click += SPictureBox_Click;
+            // 
+            // VPictureBox
+            // 
+            VPictureBox.Location = new Point(2502, 1031);
+            VPictureBox.Name = "VPictureBox";
+            VPictureBox.Size = new Size(436, 281);
+            VPictureBox.TabIndex = 21;
+            VPictureBox.TabStop = false;
+            VPictureBox.Click += VPictureBox_Click;
+            // 
+            // HValueMin
+            // 
+            HValueMin.Location = new Point(2502, 330);
+            HValueMin.Maximum = 179;
+            HValueMin.Name = "HValueMin";
+            HValueMin.Size = new Size(338, 114);
+            HValueMin.TabIndex = 22;
+            HValueMin.Value = 100;
+            HValueMin.Scroll += HValueMin_Scroll;
+            // 
+            // HValMax
+            // 
+            HValMax.Location = new Point(2502, 418);
+            HValMax.Maximum = 179;
+            HValMax.Name = "HValMax";
+            HValMax.Size = new Size(338, 114);
+            HValMax.TabIndex = 23;
+            HValMax.Value = 100;
+            HValMax.Scroll += HValMax_Scroll;
+            // 
+            // SValMin
+            // 
+            SValMin.Location = new Point(2502, 825);
+            SValMin.Maximum = 255;
+            SValMin.Name = "SValMin";
+            SValMin.Size = new Size(338, 114);
+            SValMin.TabIndex = 24;
+            SValMin.Value = 100;
+            SValMin.Scroll += SValMin_Scroll;
+            // 
+            // SValMax
+            // 
+            SValMax.Location = new Point(2502, 911);
+            SValMax.Maximum = 255;
+            SValMax.Name = "SValMax";
+            SValMax.Size = new Size(338, 114);
+            SValMax.TabIndex = 25;
+            SValMax.Value = 100;
+            SValMax.Scroll += SValMax_Scroll;
+            // 
+            // VValMin
+            // 
+            VValMin.Location = new Point(2502, 1318);
+            VValMin.Maximum = 255;
+            VValMin.Name = "VValMin";
+            VValMin.Size = new Size(338, 114);
+            VValMin.TabIndex = 26;
+            VValMin.Value = 100;
+            VValMin.Scroll += VValMin_Scroll;
+            // 
+            // VValMax
+            // 
+            VValMax.Location = new Point(2502, 1401);
+            VValMax.Maximum = 255;
+            VValMax.Name = "VValMax";
+            VValMax.Size = new Size(338, 114);
+            VValMax.TabIndex = 27;
+            VValMax.Value = 100;
+            VValMax.Scroll += VValMax_Scroll;
+            // 
+            // RI_Text
+            // 
+            RI_Text.Location = new Point(37, 612);
+            RI_Text.Name = "RI_Text";
+            RI_Text.Size = new Size(155, 47);
+            RI_Text.TabIndex = 28;
+            RI_Text.Text = "Raw Image";
+            // 
+            // BM_Text
+            // 
+            BM_Text.Location = new Point(916, 612);
+            BM_Text.Name = "BM_Text";
+            BM_Text.Size = new Size(275, 47);
+            BM_Text.TabIndex = 29;
+            BM_Text.Text = "Binary Modification";
+            // 
+            // HSVPictureBox
+            // 
+            HSVPictureBox.Location = new Point(37, 1031);
+            HSVPictureBox.Name = "HSVPictureBox";
+            HSVPictureBox.Size = new Size(789, 560);
+            HSVPictureBox.TabIndex = 30;
+            HSVPictureBox.TabStop = false;
+            HSVPictureBox.Click += HSVPictureBox_Click;
+            // 
+            // HSV_Text
+            // 
+            HSV_Text.Location = new Point(37, 1597);
+            HSV_Text.Name = "HSV_Text";
+            HSV_Text.Size = new Size(239, 47);
+            HSV_Text.TabIndex = 31;
+            HSV_Text.Text = "HSV Modification";
+            // 
             // Form1
             // 
-            ClientSize = new Size(2332, 984);
+            ClientSize = new Size(3168, 1775);
+            Controls.Add(HSV_Text);
+            Controls.Add(HSVPictureBox);
+            Controls.Add(BM_Text);
+            Controls.Add(RI_Text);
+            Controls.Add(VValMax);
+            Controls.Add(VValMin);
+            Controls.Add(SValMax);
+            Controls.Add(SValMin);
+            Controls.Add(HValMax);
+            Controls.Add(HValueMin);
+            Controls.Add(VPictureBox);
+            Controls.Add(SPictureBox);
+            Controls.Add(HPictureBox);
             Controls.Add(FR_Text_Label);
             Controls.Add(MR_Text_Label);
             Controls.Add(M_Text_Label);
@@ -238,6 +411,16 @@ namespace UR1_Alyssa_Bloomfield
             ((System.ComponentModel.ISupportInitialize)GrayPictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)MinTrackBar).EndInit();
             ((System.ComponentModel.ISupportInitialize)MaxTrackBar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)HPictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SPictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)VPictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)HValueMin).EndInit();
+            ((System.ComponentModel.ISupportInitialize)HValMax).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SValMin).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SValMax).EndInit();
+            ((System.ComponentModel.ISupportInitialize)VValMin).EndInit();
+            ((System.ComponentModel.ISupportInitialize)VValMax).EndInit();
+            ((System.ComponentModel.ISupportInitialize)HSVPictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -414,6 +597,31 @@ namespace UR1_Alyssa_Bloomfield
                 {
                     FarRight.Text = $"{whitePixelsFarRight} White Pixels";
                 }));
+
+
+                //HSV Code
+                Mat hsvFrame = new Mat();
+                CvInvoke.CvtColor(frame, hsvFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Hsv);
+
+                Mat[] hsvChannels = hsvFrame.Split();
+
+                Mat hueFilter = new Mat();
+                CvInvoke.InRange(hsvChannels[0], new ScalarArray(hmin), new ScalarArray(hmax), hueFilter);
+                Invoke(new Action(() => { HPictureBox.Image = hueFilter.ToBitmap(); }));
+
+                Mat saturationFilter = new Mat();
+                CvInvoke.InRange(hsvChannels[1], new ScalarArray(smin), new ScalarArray(smax), saturationFilter);
+                Invoke(new Action(() => { SPictureBox.Image = saturationFilter.ToBitmap(); }));
+
+                Mat valueFilter = new Mat();
+                CvInvoke.InRange(hsvChannels[2], new ScalarArray(vmin), new ScalarArray(vmax), valueFilter);
+                Invoke(new Action(() => { VPictureBox.Image = valueFilter.ToBitmap(); }));
+
+                Mat mergedImage = new Mat();
+                CvInvoke.BitwiseAnd(hueFilter, saturationFilter, mergedImage);
+                CvInvoke.BitwiseAnd(mergedImage, valueFilter, mergedImage);
+                Invoke(new Action(() => { HSVPictureBox.Image = mergedImage.ToBitmap(); }));
+
             } //while loop closer
         } //private void closer
 
@@ -442,6 +650,56 @@ namespace UR1_Alyssa_Bloomfield
 
         }//FarRight Click Parathensis
 
+        private void HSVPictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void HPictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SPictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void VPictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //The 6 trackbars for the HSV Modifications
+        private void HValueMin_Scroll(object sender, EventArgs e)
+        {
+
+        }
+
+        private void HValMax_Scroll(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SValMin_Scroll(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SValMax_Scroll(object sender, EventArgs e)
+        {
+
+        }
+
+        private void VValMin_Scroll(object sender, EventArgs e)
+        {
+
+        }
+
+        private void VValMax_Scroll(object sender, EventArgs e)
+        {
+
+        }
+
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -458,5 +716,6 @@ namespace UR1_Alyssa_Bloomfield
                 mCancellationToken.Dispose();
             }
         }
+
     } //public partial class Form1 parathensis
 } //namespace parathensis
