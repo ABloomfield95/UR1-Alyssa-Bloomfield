@@ -50,7 +50,7 @@ namespace UR1_Alyssa_Bloomfield
         private PictureBox HPictureBox;
         private PictureBox SPictureBox;
         private PictureBox VPictureBox;
-        private TrackBar HValueMin;
+        private TrackBar HValMin;
         private TrackBar HValMax;
         private TrackBar SValMin;
         private TrackBar SValMax;
@@ -61,6 +61,13 @@ namespace UR1_Alyssa_Bloomfield
         private PictureBox HSVPictureBox;
         private TextBox HSV_Text;
 
+        //HSV Trackbar Values
+        private int hMin = 0;
+        private int hMax = 179;
+        private int sMin = 0;
+        private int sMax = 255;
+        private int vMin = 0;
+        private int vMax = 255;
 
 
         public Form1()
@@ -89,7 +96,7 @@ namespace UR1_Alyssa_Bloomfield
             HPictureBox = new PictureBox();
             SPictureBox = new PictureBox();
             VPictureBox = new PictureBox();
-            HValueMin = new TrackBar();
+            HValMin = new TrackBar();
             HValMax = new TrackBar();
             SValMin = new TrackBar();
             SValMax = new TrackBar();
@@ -106,7 +113,7 @@ namespace UR1_Alyssa_Bloomfield
             ((System.ComponentModel.ISupportInitialize)HPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)VPictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)HValueMin).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)HValMin).BeginInit();
             ((System.ComponentModel.ISupportInitialize)HValMax).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SValMin).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SValMax).BeginInit();
@@ -280,15 +287,15 @@ namespace UR1_Alyssa_Bloomfield
             VPictureBox.TabStop = false;
             VPictureBox.Click += VPictureBox_Click;
             // 
-            // HValueMin
+            // HValMin
             // 
-            HValueMin.Location = new Point(2502, 330);
-            HValueMin.Maximum = 179;
-            HValueMin.Name = "HValueMin";
-            HValueMin.Size = new Size(338, 114);
-            HValueMin.TabIndex = 22;
-            HValueMin.Value = 100;
-            HValueMin.Scroll += HValueMin_Scroll;
+            HValMin.Location = new Point(2502, 330);
+            HValMin.Maximum = 179;
+            HValMin.Name = "HValMin";
+            HValMin.Size = new Size(338, 114);
+            HValMin.TabIndex = 22;
+            HValMin.Value = 100;
+            HValMin.Scroll += HValueMin_Scroll;
             // 
             // HValMax
             // 
@@ -385,7 +392,7 @@ namespace UR1_Alyssa_Bloomfield
             Controls.Add(SValMax);
             Controls.Add(SValMin);
             Controls.Add(HValMax);
-            Controls.Add(HValueMin);
+            Controls.Add(HValMin);
             Controls.Add(VPictureBox);
             Controls.Add(SPictureBox);
             Controls.Add(HPictureBox);
@@ -414,7 +421,7 @@ namespace UR1_Alyssa_Bloomfield
             ((System.ComponentModel.ISupportInitialize)HPictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)SPictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)VPictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)HValueMin).EndInit();
+            ((System.ComponentModel.ISupportInitialize)HValMin).EndInit();
             ((System.ComponentModel.ISupportInitialize)HValMax).EndInit();
             ((System.ComponentModel.ISupportInitialize)SValMin).EndInit();
             ((System.ComponentModel.ISupportInitialize)SValMax).EndInit();
@@ -480,6 +487,64 @@ namespace UR1_Alyssa_Bloomfield
                 mIsCapturing = true; //indicate the state
                 StartStopBtn.Text = "Stop"; //infrom accordingly
             }
+        }
+
+        //The 6 trackbars for the HSV Modifications
+        private void HValueMin_Scroll(object sender, EventArgs e)
+        {
+            if (HValMin.Value > HValMax.Value)
+            {
+                HValMax.Value = HValMin.Value;
+            }
+
+            hMin = HValMax.Value;
+        }
+
+        private void HValMax_Scroll(object sender, EventArgs e)
+        {
+            if (HValMin.Value > HValMax.Value)
+            {
+                HValMin.Value = HValMax.Value;
+            }
+            hMax = HValMax.Value;
+        }
+
+        private void SValMin_Scroll(object sender, EventArgs e)
+        {
+            if (SValMin.Value > SValMax.Value)
+            {
+                SValMax.Value = SValMin.Value;
+            }
+
+            sMin = SValMax.Value;
+        }
+
+        private void SValMax_Scroll(object sender, EventArgs e)
+        {
+            if (SValMin.Value > SValMax.Value)
+            {
+                SValMin.Value = SValMax.Value;
+            }
+            sMax = SValMax.Value;
+        }
+
+        private void VValMin_Scroll(object sender, EventArgs e)
+        {
+            if (VValMin.Value > VValMax.Value)
+            {
+                VValMax.Value = VValMin.Value;
+            }
+
+            vMin = VValMax.Value;
+        }
+
+        private void VValMax_Scroll(object sender, EventArgs e)
+        {
+            if (VValMin.Value > VValMax.Value)
+            {
+                VValMin.Value = VValMax.Value;
+            }
+            vMax = VValMax.Value;
         }
 
         private void DisplayWebcam(CancellationToken token)
@@ -598,23 +663,24 @@ namespace UR1_Alyssa_Bloomfield
                     FarRight.Text = $"{whitePixelsFarRight} White Pixels";
                 }));
 
-
                 //HSV Code
+                //Invoke(new Action(() => { PictureBox.Image = frame.ToBitmap; }));
+
                 Mat hsvFrame = new Mat();
                 CvInvoke.CvtColor(frame, hsvFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Hsv);
 
                 Mat[] hsvChannels = hsvFrame.Split();
 
                 Mat hueFilter = new Mat();
-                CvInvoke.InRange(hsvChannels[0], new ScalarArray(hmin), new ScalarArray(hmax), hueFilter);
+                CvInvoke.InRange(hsvChannels[0], new ScalarArray(hMin), new ScalarArray(hMax), hueFilter);
                 Invoke(new Action(() => { HPictureBox.Image = hueFilter.ToBitmap(); }));
 
                 Mat saturationFilter = new Mat();
-                CvInvoke.InRange(hsvChannels[1], new ScalarArray(smin), new ScalarArray(smax), saturationFilter);
+                CvInvoke.InRange(hsvChannels[1], new ScalarArray(sMin), new ScalarArray(sMax), saturationFilter);
                 Invoke(new Action(() => { SPictureBox.Image = saturationFilter.ToBitmap(); }));
 
                 Mat valueFilter = new Mat();
-                CvInvoke.InRange(hsvChannels[2], new ScalarArray(vmin), new ScalarArray(vmax), valueFilter);
+                CvInvoke.InRange(hsvChannels[2], new ScalarArray(vMin), new ScalarArray(vMax), valueFilter);
                 Invoke(new Action(() => { VPictureBox.Image = valueFilter.ToBitmap(); }));
 
                 Mat mergedImage = new Mat();
@@ -668,38 +734,6 @@ namespace UR1_Alyssa_Bloomfield
         {
 
         }
-
-        //The 6 trackbars for the HSV Modifications
-        private void HValueMin_Scroll(object sender, EventArgs e)
-        {
-
-        }
-
-        private void HValMax_Scroll(object sender, EventArgs e)
-        {
-
-        }
-
-        private void SValMin_Scroll(object sender, EventArgs e)
-        {
-
-        }
-
-        private void SValMax_Scroll(object sender, EventArgs e)
-        {
-
-        }
-
-        private void VValMin_Scroll(object sender, EventArgs e)
-        {
-
-        }
-
-        private void VValMax_Scroll(object sender, EventArgs e)
-        {
-
-        }
-
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
