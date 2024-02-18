@@ -688,6 +688,13 @@ namespace UR1_Alyssa_Bloomfield
                 CvInvoke.BitwiseAnd(mergedImage, valueFilter, mergedImage);
                 Invoke(new Action(() => { HSVPictureBox.Image = mergedImage.ToBitmap(); }));
 
+                //Delete used mats to free up space
+                hsvFrame.Dispose();
+                hueFilter.Dispose();
+                saturationFilter.Dispose();
+                valueFilter.Dispose();
+                mergedImage.Dispose();
+
             } //while loop closer
         } //private void closer
 
