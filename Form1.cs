@@ -69,6 +69,23 @@ namespace UR1_Alyssa_Bloomfield
         private int vMin = 0;
         private int vMax = 255;
 
+        private TextBox H_Label;
+        private TextBox S_Label;
+        private TextBox V_Label;
+
+        //HSV Pixel Counting
+        private TextBox HSV_FR_Label;
+        private TextBox HSV_MR_Label;
+        private TextBox HSV_M_Label;
+        private TextBox HSV_ML_Label;
+        private TextBox HSV_FL_Label;
+        private Label HSV_FR;
+        private Label HSV_MR;
+        private Label HSV_M;
+        private Label HSV_ML;
+        private Label HSV_FL;
+        private Label ColorBox_W;
+        private Label ColorBox_R;
 
         public Form1()
         {
@@ -106,6 +123,21 @@ namespace UR1_Alyssa_Bloomfield
             BM_Text = new TextBox();
             HSVPictureBox = new PictureBox();
             HSV_Text = new TextBox();
+            H_Label = new TextBox();
+            S_Label = new TextBox();
+            V_Label = new TextBox();
+            HSV_FR_Label = new TextBox();
+            HSV_MR_Label = new TextBox();
+            HSV_M_Label = new TextBox();
+            HSV_ML_Label = new TextBox();
+            HSV_FL_Label = new TextBox();
+            HSV_FR = new Label();
+            HSV_MR = new Label();
+            HSV_M = new Label();
+            HSV_ML = new Label();
+            HSV_FL = new Label();
+            ColorBox_W = new Label();
+            ColorBox_R = new Label();
             ((System.ComponentModel.ISupportInitialize)VideoPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)GrayPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)MinTrackBar).BeginInit();
@@ -380,9 +412,164 @@ namespace UR1_Alyssa_Bloomfield
             HSV_Text.TabIndex = 31;
             HSV_Text.Text = "HSV Modification";
             // 
+            // H_Label
+            // 
+            H_Label.Location = new Point(2502, 46);
+            H_Label.Name = "H_Label";
+            H_Label.Size = new Size(29, 47);
+            H_Label.TabIndex = 32;
+            H_Label.Text = "H";
+            H_Label.TextChanged += H_Label_TextChanged;
+            // 
+            // S_Label
+            // 
+            S_Label.Location = new Point(2502, 538);
+            S_Label.Name = "S_Label";
+            S_Label.Size = new Size(29, 47);
+            S_Label.TabIndex = 33;
+            S_Label.Text = "S";
+            S_Label.TextChanged += S_Label_TextChanged;
+            // 
+            // V_Label
+            // 
+            V_Label.Location = new Point(2502, 1031);
+            V_Label.Name = "V_Label";
+            V_Label.Size = new Size(29, 47);
+            V_Label.TabIndex = 34;
+            V_Label.Text = "V";
+            V_Label.TextChanged += V_Label_TextChanged;
+            // 
+            // HSV_FR_Label
+            // 
+            HSV_FR_Label.Location = new Point(893, 1509);
+            HSV_FR_Label.Name = "HSV_FR_Label";
+            HSV_FR_Label.Size = new Size(283, 47);
+            HSV_FR_Label.TabIndex = 44;
+            HSV_FR_Label.Text = "Far Right Pixel Count";
+            HSV_FR_Label.TextChanged += HSV_FR_Label_TextChanged;
+            // 
+            // HSV_MR_Label
+            // 
+            HSV_MR_Label.Location = new Point(901, 1389);
+            HSV_MR_Label.Name = "HSV_MR_Label";
+            HSV_MR_Label.Size = new Size(342, 47);
+            HSV_MR_Label.TabIndex = 43;
+            HSV_MR_Label.Text = "Middle Right Pixel Count";
+            HSV_MR_Label.TextChanged += HSV_MR_Label_TextChanged;
+            // 
+            // HSV_M_Label
+            // 
+            HSV_M_Label.Location = new Point(901, 1276);
+            HSV_M_Label.Name = "HSV_M_Label";
+            HSV_M_Label.Size = new Size(263, 47);
+            HSV_M_Label.TabIndex = 42;
+            HSV_M_Label.Text = "Middle Pixel Count";
+            HSV_M_Label.TextChanged += HSV_M_Label_TextChanged;
+            // 
+            // HSV_ML_Label
+            // 
+            HSV_ML_Label.Location = new Point(901, 1151);
+            HSV_ML_Label.Name = "HSV_ML_Label";
+            HSV_ML_Label.Size = new Size(317, 47);
+            HSV_ML_Label.TabIndex = 41;
+            HSV_ML_Label.Text = "Middle Left Pixel Count";
+            HSV_ML_Label.TextChanged += HSV_ML_Label_TextChanged;
+            // 
+            // HSV_FL_Label
+            // 
+            HSV_FL_Label.Location = new Point(901, 1031);
+            HSV_FL_Label.Name = "HSV_FL_Label";
+            HSV_FL_Label.Size = new Size(263, 47);
+            HSV_FL_Label.TabIndex = 40;
+            HSV_FL_Label.Text = "Far Left Pixel Count";
+            HSV_FL_Label.TextChanged += HSV_FL_Label_TextChanged;
+            // 
+            // HSV_FR
+            // 
+            HSV_FR.AutoSize = true;
+            HSV_FR.Location = new Point(893, 1550);
+            HSV_FR.Name = "HSV_FR";
+            HSV_FR.Size = new Size(127, 41);
+            HSV_FR.TabIndex = 39;
+            HSV_FR.Text = "FarRight";
+            HSV_FR.Click += HSV_FR_Click;
+            // 
+            // HSV_MR
+            // 
+            HSV_MR.AutoSize = true;
+            HSV_MR.Location = new Point(901, 1439);
+            HSV_MR.Name = "HSV_MR";
+            HSV_MR.Size = new Size(181, 41);
+            HSV_MR.TabIndex = 38;
+            HSV_MR.Text = "MiddleRight";
+            HSV_MR.Click += HSV_MR_Click;
+            // 
+            // HSV_M
+            // 
+            HSV_M.AutoSize = true;
+            HSV_M.Location = new Point(901, 1315);
+            HSV_M.Name = "HSV_M";
+            HSV_M.Size = new Size(111, 41);
+            HSV_M.TabIndex = 37;
+            HSV_M.Text = "Middle";
+            HSV_M.Click += HSV_M_Click;
+            // 
+            // HSV_ML
+            // 
+            HSV_ML.AutoSize = true;
+            HSV_ML.Location = new Point(901, 1201);
+            HSV_ML.Name = "HSV_ML";
+            HSV_ML.Size = new Size(160, 41);
+            HSV_ML.TabIndex = 36;
+            HSV_ML.Text = "MiddleLeft";
+            HSV_ML.Click += HSV_ML_Click;
+            // 
+            // HSV_FL
+            // 
+            HSV_FL.AutoSize = true;
+            HSV_FL.Location = new Point(901, 1081);
+            HSV_FL.Name = "HSV_FL";
+            HSV_FL.Size = new Size(106, 41);
+            HSV_FL.TabIndex = 35;
+            HSV_FL.Text = "FarLeft";
+            HSV_FL.Click += HSV_FL_Click;
+            // 
+            // ColorBox_W
+            // 
+            ColorBox_W.AutoSize = true;
+            ColorBox_W.Location = new Point(1187, 618);
+            ColorBox_W.Name = "ColorBox_W";
+            ColorBox_W.Size = new Size(114, 41);
+            ColorBox_W.TabIndex = 45;
+            ColorBox_W.Text = "(White)";
+            // 
+            // ColorBox_R
+            // 
+            ColorBox_R.AutoSize = true;
+            ColorBox_R.Location = new Point(282, 1603);
+            ColorBox_R.Name = "ColorBox_R";
+            ColorBox_R.Size = new Size(87, 41);
+            ColorBox_R.TabIndex = 46;
+            ColorBox_R.Text = "(Red)";
+            // 
             // Form1
             // 
             ClientSize = new Size(3168, 1775);
+            Controls.Add(ColorBox_R);
+            Controls.Add(ColorBox_W);
+            Controls.Add(HSV_FR_Label);
+            Controls.Add(HSV_MR_Label);
+            Controls.Add(HSV_M_Label);
+            Controls.Add(HSV_ML_Label);
+            Controls.Add(HSV_FL_Label);
+            Controls.Add(HSV_FR);
+            Controls.Add(HSV_MR);
+            Controls.Add(HSV_M);
+            Controls.Add(HSV_ML);
+            Controls.Add(HSV_FL);
+            Controls.Add(V_Label);
+            Controls.Add(S_Label);
+            Controls.Add(H_Label);
             Controls.Add(HSV_Text);
             Controls.Add(HSVPictureBox);
             Controls.Add(BM_Text);
@@ -455,7 +642,7 @@ namespace UR1_Alyssa_Bloomfield
                 MaxTrackBar.Value = MinTrackBar.Value;
             }
 
-            minGrayValue = MaxTrackBar.Value;
+            minGrayValue = MinTrackBar.Value;
         }
 
         private void TrackBar2_Scroll(object sender, EventArgs e) //max
@@ -497,7 +684,7 @@ namespace UR1_Alyssa_Bloomfield
                 HValMax.Value = HValMin.Value;
             }
 
-            hMin = HValMax.Value;
+            hMin = HValMin.Value;
         }
 
         private void HValMax_Scroll(object sender, EventArgs e)
@@ -516,7 +703,7 @@ namespace UR1_Alyssa_Bloomfield
                 SValMax.Value = SValMin.Value;
             }
 
-            sMin = SValMax.Value;
+            sMin = SValMin.Value;
         }
 
         private void SValMax_Scroll(object sender, EventArgs e)
@@ -535,7 +722,7 @@ namespace UR1_Alyssa_Bloomfield
                 VValMax.Value = VValMin.Value;
             }
 
-            vMin = VValMax.Value;
+            vMin = VValMin.Value;
         }
 
         private void VValMax_Scroll(object sender, EventArgs e)
@@ -552,6 +739,7 @@ namespace UR1_Alyssa_Bloomfield
             while (!token.IsCancellationRequested) //While no requested cancellation
             {
                 Mat frame = mCapture.QueryFrame(); //grab a new frame
+                Mat GrayFrame = frame.Clone();
 
                 if (frame == null)
                 {
@@ -566,17 +754,19 @@ namespace UR1_Alyssa_Bloomfield
                 //Create a 60 fps frame rate
                 _ = Task.Delay(16);
 
+
                 //Display the current frame
                 VideoPictureBox.Image = frame.ToBitmap();
 
                 //Modifications to change the second frame
-                CvInvoke.CvtColor(frame, frame, ColorConversion.Bgr2Gray);
-                CvInvoke.Threshold(frame, frame, minGrayValue, maxGrayValue, Emgu.CV.CvEnum.ThresholdType.Binary);
-                GrayPictureBox.Image = frame.ToBitmap();
+                CvInvoke.Resize(GrayFrame, GrayFrame, newSize);
+                CvInvoke.CvtColor(GrayFrame, GrayFrame, ColorConversion.Bgr2Gray);
+                CvInvoke.Threshold(GrayFrame, GrayFrame, minGrayValue, maxGrayValue, Emgu.CV.CvEnum.ThresholdType.Binary);
+                GrayPictureBox.Image = GrayFrame.ToBitmap();
 
-                //Far Left Pixels
+                //Far Left Pixels - Binary
                 int whitePixelsFarLeft = 0;
-                Image<Gray, byte> img = frame.ToImage<Gray, byte>();
+                Image<Gray, byte> img = GrayFrame.ToImage<Gray, byte>();
                 for (int x = 0; x < frame.Width / 5; x++)
                 {
                     for (int y = 0; frame.Height > y; y++)
@@ -592,9 +782,9 @@ namespace UR1_Alyssa_Bloomfield
                 }));
 
 
-                //Mid Left Pixels
+                //Mid Left Pixels - Binary
                 int whitePixelsMidLeft = 0;
-                Image<Gray, byte> img2 = frame.ToImage<Gray, byte>();
+                Image<Gray, byte> img2 = GrayFrame.ToImage<Gray, byte>();
                 for (int x = frame.Width / 5; x < 2 * (frame.Width / 5); x++)
                 {
                     for (int y = 0; frame.Height > y; y++)
@@ -610,9 +800,9 @@ namespace UR1_Alyssa_Bloomfield
                 }));
 
 
-                //Middle Pixels
+                //Middle Pixels  - Binary
                 int whitePixelsMid = 0;
-                Image<Gray, byte> img3 = frame.ToImage<Gray, byte>();
+                Image<Gray, byte> img3 = GrayFrame.ToImage<Gray, byte>();
                 for (int x = 2 * (frame.Width / 5); x < 3 * (frame.Width / 5); x++)
                 {
                     for (int y = 0; frame.Height > y; y++)
@@ -628,9 +818,9 @@ namespace UR1_Alyssa_Bloomfield
                 }));
 
 
-                //Mid Right Pixels
+                //Mid Right Pixels  - Binary
                 int whitePixelsMidRight = 0;
-                Image<Gray, byte> img4 = frame.ToImage<Gray, byte>();
+                Image<Gray, byte> img4 = GrayFrame.ToImage<Gray, byte>();
                 for (int x = 3 * (frame.Width / 5); x < 4 * (frame.Width / 5); x++)
                 {
                     for (int y = 0; frame.Height > y; y++)
@@ -646,9 +836,9 @@ namespace UR1_Alyssa_Bloomfield
                 }));
 
 
-                //Far Right Pixels
+                //Far Right Pixels  - Binary
                 int whitePixelsFarRight = 0;
-                Image<Gray, byte> img5 = frame.ToImage<Gray, byte>();
+                Image<Gray, byte> img5 = GrayFrame.ToImage<Gray, byte>();
                 for (int x = 5 * (frame.Width / 5); x < frame.Width; x++)
                 {
                     for (int y = 0; frame.Height > y; y++)
@@ -664,7 +854,6 @@ namespace UR1_Alyssa_Bloomfield
                 }));
 
                 //HSV Code
-                //Invoke(new Action(() => { PictureBox.Image = frame.ToBitmap; }));
 
                 Mat hsvFrame = new Mat();
                 CvInvoke.CvtColor(frame, hsvFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Hsv);
@@ -686,16 +875,107 @@ namespace UR1_Alyssa_Bloomfield
                 Mat mergedImage = new Mat();
                 CvInvoke.BitwiseAnd(hueFilter, saturationFilter, mergedImage);
                 CvInvoke.BitwiseAnd(mergedImage, valueFilter, mergedImage);
+                CvInvoke.Resize(mergedImage, mergedImage, newSize);
                 Invoke(new Action(() => { HSVPictureBox.Image = mergedImage.ToBitmap(); }));
 
-                //Delete used mats to free up space
-                hsvFrame.Dispose();
-                hueFilter.Dispose();
-                saturationFilter.Dispose();
-                valueFilter.Dispose();
-                mergedImage.Dispose();
+                //HSV White Pixel Counting
 
+                //Far Left Pixels - HSV
+                int whitePixelsFarLeftHSV = 0;
+                Image<Gray, byte> imgHSV = mergedImage.ToImage<Gray, byte>();
+                for (int x = 0; x < frame.Width / 5; x++)
+                {
+                    for (int y = 0; frame.Height > y; y++)
+                    {
+                        if (imgHSV.Data[y, x, 0] == 255)
+                            whitePixelsFarLeftHSV++;
+                    }
+                }
+
+                Invoke(new Action(() =>
+                {
+                    HSV_FL.Text = $"{whitePixelsFarLeftHSV} White Pixels";
+                }));
+
+
+                //Mid Left Pixels - HSV
+                int whitePixelsMidLeftHSV = 0;
+                Image<Gray, byte> img2HSV = mergedImage.ToImage<Gray, byte>();
+                for (int x = frame.Width / 5; x < 2 * (frame.Width / 5); x++)
+                {
+                    for (int y = 0; frame.Height > y; y++)
+                    {
+                        if (img2HSV.Data[y, x, 0] == 255)
+                            whitePixelsMidLeftHSV++;
+                    }
+                }
+
+                Invoke(new Action(() =>
+                {
+                    HSV_ML.Text = $"{whitePixelsMidLeftHSV} White Pixels";
+                }));
+
+
+                //Middle Pixels  - HSV
+                int whitePixelsMidHSV = 0;
+                Image<Gray, byte> img3HSV = mergedImage.ToImage<Gray, byte>();
+                for (int x = 2 * (frame.Width / 5); x < 3 * (frame.Width / 5); x++)
+                {
+                    for (int y = 0; frame.Height > y; y++)
+                    {
+                        if (img3HSV.Data[y, x, 0] == 255)
+                        { whitePixelsMidHSV++; }
+                    }
+                }
+
+                Invoke(new Action(() =>
+                {
+                    HSV_M.Text = $"{whitePixelsMidHSV} White Pixels";
+                }));
+
+
+                //Mid Right Pixels  - HSV
+                int whitePixelsMidRightHSV = 0;
+                Image<Gray, byte> img4HSV = mergedImage.ToImage<Gray, byte>();
+                for (int x = 3 * (frame.Width / 5); x < 4 * (frame.Width / 5); x++)
+                {
+                    for (int y = 0; frame.Height > y; y++)
+                    {
+                        if (img4HSV.Data[y, x, 0] == 255)
+                        { whitePixelsMidRightHSV++; }
+                    }
+                }
+
+                Invoke(new Action(() =>
+                {
+                    HSV_MR.Text = $"{whitePixelsMidRightHSV} White Pixels";
+                }));
+
+
+                //Far Right Pixels  - HSV
+                int whitePixelsFarRightHSV = 0;
+                Image<Gray, byte> img5HSV = mergedImage.ToImage<Gray, byte>();
+                for (int x = 5 * (frame.Width / 5); x < frame.Width; x++)
+                {
+                    for (int y = 0; frame.Height > y; y++)
+                    {
+                        if (img5HSV.Data[y, x, 0] == 255)
+                            whitePixelsFarRightHSV++;
+                    }
+                }
+
+                Invoke(new Action(() =>
+                {
+                    HSV_FR.Text = $"{whitePixelsFarRightHSV} White Pixels";
+                }));
             } //while loop closer
+
+            //Delete used mats to free up space
+            /*hsvFrame.Dispose();
+            hueFilter.Dispose();
+            saturationFilter.Dispose();
+            valueFilter.Dispose();
+            mergedImage.Dispose();*/
         } //private void closer
 
         private void FarLeft_Click(object sender, EventArgs e)
@@ -742,6 +1022,69 @@ namespace UR1_Alyssa_Bloomfield
 
         }
 
+        private void H_Label_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void S_Label_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void V_Label_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void HSV_FL_Label_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void HSV_ML_Label_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void HSV_M_Label_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void HSV_MR_Label_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void HSV_FR_Label_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void HSV_FL_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void HSV_ML_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void HSV_M_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void HSV_MR_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void HSV_FR_Click(object sender, EventArgs e)
+        {
+
+        }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             //mCaptureThread.Abort();
@@ -757,6 +1100,5 @@ namespace UR1_Alyssa_Bloomfield
                 mCancellationToken.Dispose();
             }
         }
-
     } //public partial class Form1 parathensis
 } //namespace parathensis
