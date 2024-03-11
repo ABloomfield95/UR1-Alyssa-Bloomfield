@@ -1280,7 +1280,7 @@ namespace UR1_Alyssa_Bloomfield
                 CvInvoke.BitwiseAnd(mergedImage, valueFilter, mergedImage);
                 CvInvoke.Resize(mergedImage, mergedImage, newSize);
                 Invoke(new Action(() => { HSVPictureBox.Image = mergedImage.ToBitmap(); }));
-
+                
                 //HSV White Pixel Counting
 
                 //Far Left Pixels - HSV
@@ -1371,7 +1371,7 @@ namespace UR1_Alyssa_Bloomfield
                 {
                     HSV_FR.Text = $"{whitePixelsFarRightHSV} White Pixels";
                 }));
-
+                
                 //HSV2 Code
 
                 Mat hsvFrame2 = new Mat();
@@ -1380,18 +1380,18 @@ namespace UR1_Alyssa_Bloomfield
                 Mat[] hsvChannels2 = hsvFrame2.Split();
 
                 Mat hueFilter2 = new Mat();
-                CvInvoke.InRange(hsvChannels2[0], new ScalarArray(hMin), new ScalarArray(hMax), hueFilter2);
+                CvInvoke.InRange(hsvChannels2[0], new ScalarArray(hMin2), new ScalarArray(hMax2), hueFilter2);
                 Invoke(new Action(() => { H2PictureBox.Image = hueFilter2.ToBitmap(); }));
 
                 Mat saturationFilter2 = new Mat();
-                CvInvoke.InRange(hsvChannels2[1], new ScalarArray(sMin), new ScalarArray(sMax), saturationFilter2);
+                CvInvoke.InRange(hsvChannels2[1], new ScalarArray(sMin2), new ScalarArray(sMax2), saturationFilter2);
                 Invoke(new Action(() => { S2PictureBox.Image = saturationFilter2.ToBitmap(); }));
 
                 Mat valueFilter2 = new Mat();
-                CvInvoke.InRange(hsvChannels2[2], new ScalarArray(vMin), new ScalarArray(vMax), valueFilter2);
+                CvInvoke.InRange(hsvChannels2[2], new ScalarArray(vMin2), new ScalarArray(vMax2), valueFilter2);
                 Invoke(new Action(() => { V2PictureBox.Image = valueFilter2.ToBitmap(); }));
 
-                Mat mergedImage2 = new Mat();
+                Mat mergedImage2 = new();
                 CvInvoke.BitwiseAnd(hueFilter2, saturationFilter2, mergedImage2);
                 CvInvoke.BitwiseAnd(mergedImage2, valueFilter2, mergedImage2);
                 CvInvoke.Resize(mergedImage2, mergedImage2, newSize);
@@ -1467,7 +1467,7 @@ namespace UR1_Alyssa_Bloomfield
 
                 Invoke(new Action(() =>
                 {
-                    HSV2_MR.Text = $"{whitePixelsMidRightHSV} White Pixels";
+                    HSV2_MR.Text = $"{whitePixelsMidRightHSV2} White Pixels";
                 }));
 
 
