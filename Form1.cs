@@ -1,6 +1,8 @@
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
+using System.IO.Ports;
+using System.Text;
 
 namespace UR1_Alyssa_Bloomfield
 {
@@ -123,6 +125,17 @@ namespace UR1_Alyssa_Bloomfield
         private TextBox HSV2_Text;
         private PictureBox HSV2PictureBox;
 
+        //Serial Communication
+        private TextBox MCDataTextBox;
+        SerialPort MicroController = new SerialPort();
+        Thread mSerialMonitoringThread;
+        CancellationTokenSource mSerialCancellationToken = new();
+        int mCountourCount = 0;
+        bool mFoundIsValid = false;
+        bool mReplyIsReady = false;
+        private Button BrowseBtn;
+
+
         public Form1()
         {
             InitializeComponent();
@@ -199,6 +212,8 @@ namespace UR1_Alyssa_Bloomfield
             V2PictureBox = new PictureBox();
             S2PictureBox = new PictureBox();
             H2PictureBox = new PictureBox();
+            MCDataTextBox = new TextBox();
+            BrowseBtn = new Button();
             ((System.ComponentModel.ISupportInitialize)VideoPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)GrayPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)MinTrackBar).BeginInit();
@@ -860,9 +875,29 @@ namespace UR1_Alyssa_Bloomfield
             H2PictureBox.TabStop = false;
             H2PictureBox.Click += H2PictureBox_Click;
             // 
+            // MCDataTextBox
+            // 
+            MCDataTextBox.Location = new Point(2592, 1579);
+            MCDataTextBox.Name = "MCDataTextBox";
+            MCDataTextBox.Size = new Size(250, 47);
+            MCDataTextBox.TabIndex = 72;
+            MCDataTextBox.TextChanged += MCDataTextBox_TextChanged;
+            // 
+            // BrowseBtn
+            // 
+            BrowseBtn.Location = new Point(2963, 1596);
+            BrowseBtn.Name = "BrowseBtn";
+            BrowseBtn.Size = new Size(238, 78);
+            BrowseBtn.TabIndex = 73;
+            BrowseBtn.Text = "BrowseBtn";
+            BrowseBtn.UseVisualStyleBackColor = true;
+            BrowseBtn.Click += BrowseBtn_Click;
+            // 
             // Form1
             // 
             ClientSize = new Size(3498, 1775);
+            Controls.Add(BrowseBtn);
+            Controls.Add(MCDataTextBox);
             Controls.Add(V2_Label);
             Controls.Add(S2_Label);
             Controls.Add(H2_Label);
@@ -976,6 +1011,11 @@ namespace UR1_Alyssa_Bloomfield
             {
                 MessageBox.Show(ex.Message);
             }
+
+            //Serial Port Information
+            MicroController.PortName = "COM5";
+            MicroController.BaudRate = 9600;
+            MicroController.Open();
         }
 
         private void TrackBar1_Scroll(object sender, EventArgs e) //min
@@ -1135,7 +1175,6 @@ namespace UR1_Alyssa_Bloomfield
             vMax2 = VVal2Max.Value;
         }
 
-
         private void DisplayWebcam(CancellationToken token)
         {
             while (!token.IsCancellationRequested) //While no requested cancellation
@@ -1280,7 +1319,7 @@ namespace UR1_Alyssa_Bloomfield
                 CvInvoke.BitwiseAnd(mergedImage, valueFilter, mergedImage);
                 CvInvoke.Resize(mergedImage, mergedImage, newSize);
                 Invoke(new Action(() => { HSVPictureBox.Image = mergedImage.ToBitmap(); }));
-                
+
                 //HSV White Pixel Counting
 
                 //Far Left Pixels - HSV
@@ -1371,7 +1410,7 @@ namespace UR1_Alyssa_Bloomfield
                 {
                     HSV_FR.Text = $"{whitePixelsFarRightHSV} White Pixels";
                 }));
-                
+
                 //HSV2 Code
 
                 Mat hsvFrame2 = new Mat();
@@ -1497,32 +1536,98 @@ namespace UR1_Alyssa_Bloomfield
             mergedImage.Dispose();*/
         } //private void closer
 
+        private void SendSerialComm()
+        {
+            if (!mFoundIsValid)
+                return;
+
+            try
+            {
+                byte[] buffer = new byte[3]
+                {
+                    Encoding.ASCII.GetBytes("<")[0],
+                    Convert.ToByte(mCountourCount),
+                    Encoding.ASCII.GetBytes(">")[0],
+                };
+                MicroController.Write(buffer, 0, buffer.Length);
+                mReplyIsReady = true;
+
+                mSerialCancellationToken = new();
+                mSerialMonitoringThread = new(() => MonitorSerialData(mSerialCancellationToken.Token));
+                mSerialMonitoringThread.Start();
+            }
+
+            catch (Exception ex)
+            {
+                MCDataTextBox.Text = "Something is wrong";
+            }
+        }
+
+        private void MonitorSerialData(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested && mReplyIsReady)
+            {
+                string msg = MicroController.ReadLine();
+
+                mReplyIsReady = false;
+
+                //if string is empty, move on
+                if (msg.IndexOf("<") == -1 || msg.IndexOf(">") == -1)
+                    continue;
+                msg = msg.Substring(msg.IndexOf("<") + 1);
+                msg = msg.Remove(msg.IndexOf(">"));
+
+                //if string is empty, move on
+                if (msg.Length == 0)
+                    continue;
+
+                //check to make sure reply is good
+                if (msg.Substring(0, 1) == "R")
+                {
+                    Invoke(new Action(() =>
+                    {
+                        MCDataTextBox.Text =
+                            $"Return Data: {msg.Substring(1)}";
+                    }));
+                }
+            }
+        }
+
+        private void BrowseBtn_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog lFile = new OpenFileDialog();
+
+            if(lFile.ShowDialog() == DialogResult.OK)
+            {
+                mOriginalImage = CvInvoke.Imread(lFile.FileName,
+                        ImreadModes.AnyColor);
+
+                ProcessImage();
+                SendSerialComm();
+            }
+        }
+
 
         private void FarLeft_Click(object sender, EventArgs e)
         {
 
         }//FarLeft_Click parathensis
-
         private void MidLeft_Click(object sender, EventArgs e)
         {
 
         }//MidLeft Parathensis
-
         private void Middle_Click(object sender, EventArgs e)
         {
 
         }//Middle Parathensis
-
         private void MidRight_Click(object sender, EventArgs e)
         {
 
         }//MidRight Click parathensis
-
         private void FarRight_Click(object sender, EventArgs e)
         {
 
         }//FarRight Click Parathensis
-
         private void HSVPictureBox_Click(object sender, EventArgs e)
         {
 
@@ -1531,27 +1636,22 @@ namespace UR1_Alyssa_Bloomfield
         {
 
         }
-
         private void SPictureBox_Click(object sender, EventArgs e)
         {
 
         }
-
         private void VPictureBox_Click(object sender, EventArgs e)
         {
 
         }
-
         private void H_Label_TextChanged(object sender, EventArgs e)
         {
 
         }
-
         private void S_Label_TextChanged(object sender, EventArgs e)
         {
 
         }
-
         private void V_Label_TextChanged(object sender, EventArgs e)
         {
 
@@ -1560,65 +1660,56 @@ namespace UR1_Alyssa_Bloomfield
         {
 
         }
-
         private void HSV_ML_Label_TextChanged(object sender, EventArgs e)
         {
 
         }
-
         private void HSV_M_Label_TextChanged(object sender, EventArgs e)
         {
 
         }
-
         private void HSV_MR_Label_TextChanged(object sender, EventArgs e)
         {
 
         }
-
         private void HSV_FR_Label_TextChanged(object sender, EventArgs e)
         {
 
         }
-
         private void HSV_FL_Click(object sender, EventArgs e)
         {
 
         }
-
         private void HSV_ML_Click(object sender, EventArgs e)
         {
 
         }
-
         private void HSV_M_Click(object sender, EventArgs e)
         {
 
         }
-
         private void HSV_MR_Click(object sender, EventArgs e)
         {
 
         }
-
         private void HSV_FR_Click(object sender, EventArgs e)
         {
 
         }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //mCaptureThread.Abort();
-
             //Dispose all processing threats to avoid orphanded processes
             if (mIsCapturing)
             {
                 mCancellationToken.Cancel();
             }
-            else
-            {
-                mCapture.Dispose();
-                mCancellationToken.Dispose();
-            }
+            
+            mCapture.Dispose();
+            mCancellationToken.Dispose();
+
+            mSerialCancellationToken.Cancel();
+            mSerialCancellationToken.Dispose();
+            
         }
 
         private void HSV2_FL_Label_TextChanged(object sender, EventArgs e)
@@ -1696,7 +1787,6 @@ namespace UR1_Alyssa_Bloomfield
 
         }
 
-
         private void S2PictureBox_Click(object sender, EventArgs e)
         {
 
@@ -1716,5 +1806,11 @@ namespace UR1_Alyssa_Bloomfield
         {
 
         }
+
+        private void MCDataTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
     } //public partial class Form1 parathensis
 } //namespace parathensis
