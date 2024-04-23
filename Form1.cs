@@ -135,8 +135,6 @@ namespace UR1_Alyssa_Bloomfield
 
         // Serial 
         SerialPort sPort;
-        Thread mSerialMonitoringThread;
-        CancellationTokenSource mSerialCancellationToken = new();
         int serialTransmission = 0;
         private TextBox Serial;
 
@@ -300,7 +298,6 @@ namespace UR1_Alyssa_Bloomfield
             FL_Text_Label.Size = new Size(106, 41);
             FL_Text_Label.TabIndex = 5;
             FL_Text_Label.Text = "FarLeft";
-            //FL_Text_Label.Click += FarLeft_Click;
             // 
             // MidLeft
             // 
@@ -310,7 +307,6 @@ namespace UR1_Alyssa_Bloomfield
             MidLeft.Size = new Size(119, 41);
             MidLeft.TabIndex = 7;
             MidLeft.Text = "MidLeft";
-            //MidLeft.Click += MidLeft_Click;
             // 
             // Middle
             // 
@@ -320,7 +316,6 @@ namespace UR1_Alyssa_Bloomfield
             Middle.Size = new Size(111, 41);
             Middle.TabIndex = 9;
             Middle.Text = "Middle";
-            //Middle.Click += Middle_Click;
             // 
             // MidRight
             // 
@@ -330,7 +325,6 @@ namespace UR1_Alyssa_Bloomfield
             MidRight.Size = new Size(140, 41);
             MidRight.TabIndex = 11;
             MidRight.Text = "MidRight";
-            //MidRight.Click += MidRight_Click;
             // 
             // FarRight
             // 
@@ -340,7 +334,6 @@ namespace UR1_Alyssa_Bloomfield
             FarRight.Size = new Size(127, 41);
             FarRight.TabIndex = 13;
             FarRight.Text = "FarRight";
-            //FarRight.Click += FarRight_Click;
             // 
             // FL_Text_Label1
             // 
@@ -389,7 +382,6 @@ namespace UR1_Alyssa_Bloomfield
             HPictureBox.Size = new Size(436, 281);
             HPictureBox.TabIndex = 19;
             HPictureBox.TabStop = false;
-            //HPictureBox.Click += HPictureBox_Click;
             // 
             // SPictureBox
             // 
@@ -398,7 +390,6 @@ namespace UR1_Alyssa_Bloomfield
             SPictureBox.Size = new Size(436, 281);
             SPictureBox.TabIndex = 20;
             SPictureBox.TabStop = false;
-            //SPictureBox.Click += SPictureBox_Click;
             // 
             // VPictureBox
             // 
@@ -407,7 +398,6 @@ namespace UR1_Alyssa_Bloomfield
             VPictureBox.Size = new Size(436, 281);
             VPictureBox.TabIndex = 21;
             VPictureBox.TabStop = false;
-            //VPictureBox.Click += VPictureBox_Click;
             // 
             // HValMin
             // 
@@ -492,7 +482,6 @@ namespace UR1_Alyssa_Bloomfield
             HSVPictureBox.Size = new Size(789, 560);
             HSVPictureBox.TabIndex = 30;
             HSVPictureBox.TabStop = false;
-            //HSVPictureBox.Click += HSVPictureBox_Click;
             // 
             // HSV_Text
             // 
@@ -509,7 +498,6 @@ namespace UR1_Alyssa_Bloomfield
             H_Label.Size = new Size(29, 47);
             H_Label.TabIndex = 32;
             H_Label.Text = "H";
-            //H_Label.TextChanged += H_Label_TextChanged;
             // 
             // S_Label
             // 
@@ -518,7 +506,6 @@ namespace UR1_Alyssa_Bloomfield
             S_Label.Size = new Size(29, 47);
             S_Label.TabIndex = 33;
             S_Label.Text = "S";
-            //S_Label.TextChanged += S_Label_TextChanged;
             // 
             // V_Label
             // 
@@ -527,7 +514,6 @@ namespace UR1_Alyssa_Bloomfield
             V_Label.Size = new Size(29, 47);
             V_Label.TabIndex = 34;
             V_Label.Text = "V";
-            //V_Label.TextChanged += V_Label_TextChanged;
             // 
             // HSV_FR_Label
             // 
@@ -536,7 +522,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV_FR_Label.Size = new Size(283, 47);
             HSV_FR_Label.TabIndex = 44;
             HSV_FR_Label.Text = "Far Right Pixel Count";
-            //HSV_FR_Label.TextChanged += HSV_FR_Label_TextChanged;
             // 
             // HSV_MR_Label
             // 
@@ -545,7 +530,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV_MR_Label.Size = new Size(342, 47);
             HSV_MR_Label.TabIndex = 43;
             HSV_MR_Label.Text = "Middle Right Pixel Count";
-            //HSV_MR_Label.TextChanged += HSV_MR_Label_TextChanged;
             // 
             // HSV_M_Label
             // 
@@ -554,7 +538,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV_M_Label.Size = new Size(263, 47);
             HSV_M_Label.TabIndex = 42;
             HSV_M_Label.Text = "Middle Pixel Count";
-            //HSV_M_Label.TextChanged += HSV_M_Label_TextChanged;
             // 
             // HSV_ML_Label
             // 
@@ -563,7 +546,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV_ML_Label.Size = new Size(317, 47);
             HSV_ML_Label.TabIndex = 41;
             HSV_ML_Label.Text = "Middle Left Pixel Count";
-            //HSV_ML_Label.TextChanged += HSV_ML_Label_TextChanged;
             // 
             // HSV_FL_Label
             // 
@@ -572,7 +554,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV_FL_Label.Size = new Size(263, 47);
             HSV_FL_Label.TabIndex = 40;
             HSV_FL_Label.Text = "Far Left Pixel Count";
-            //HSV_FL_Label.TextChanged += HSV_FL_Label_TextChanged;
             // 
             // HSV_FR
             // 
@@ -582,7 +563,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV_FR.Size = new Size(127, 41);
             HSV_FR.TabIndex = 39;
             HSV_FR.Text = "FarRight";
-            //HSV_FR.Click += HSV_FR_Click;
             // 
             // HSV_MR
             // 
@@ -592,7 +572,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV_MR.Size = new Size(181, 41);
             HSV_MR.TabIndex = 38;
             HSV_MR.Text = "MiddleRight";
-            //HSV_MR.Click += HSV_MR_Click;
             // 
             // HSV_M
             // 
@@ -602,7 +581,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV_M.Size = new Size(111, 41);
             HSV_M.TabIndex = 37;
             HSV_M.Text = "Middle";
-            //HSV_M.Click += HSV_M_Click;
             // 
             // HSV_ML
             // 
@@ -612,7 +590,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV_ML.Size = new Size(160, 41);
             HSV_ML.TabIndex = 36;
             HSV_ML.Text = "MiddleLeft";
-            //HSV_ML.Click += HSV_ML_Click;
             // 
             // HSV_FL
             // 
@@ -622,7 +599,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV_FL.Size = new Size(106, 41);
             HSV_FL.TabIndex = 35;
             HSV_FL.Text = "FarLeft";
-            //HSV_FL.Click += HSV_FL_Click;
             // 
             // ColorBox_W
             // 
@@ -650,7 +626,6 @@ namespace UR1_Alyssa_Bloomfield
             ColorBox_Alt.Size = new Size(87, 41);
             ColorBox_Alt.TabIndex = 59;
             ColorBox_Alt.Text = "(Red)";
-            //ColorBox_Alt.Click += ColorBox_Alt_Click;
             // 
             // HSV2_FR_Label
             // 
@@ -659,7 +634,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV2_FR_Label.Size = new Size(283, 47);
             HSV2_FR_Label.TabIndex = 58;
             HSV2_FR_Label.Text = "Far Right Pixel Count";
-            //HSV2_FR_Label.TextChanged += HSV2_FR_Label_TextChanged;
             // 
             // HSV2_MR_Label
             // 
@@ -668,7 +642,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV2_MR_Label.Size = new Size(342, 47);
             HSV2_MR_Label.TabIndex = 57;
             HSV2_MR_Label.Text = "Middle Right Pixel Count";
-            //HSV2_MR_Label.TextChanged += HSV2_MR_Label_TextChanged;
             // 
             // HSV2_M_Label
             // 
@@ -677,7 +650,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV2_M_Label.Size = new Size(263, 47);
             HSV2_M_Label.TabIndex = 56;
             HSV2_M_Label.Text = "Middle Pixel Count";
-            //HSV2_M_Label.TextChanged += HSV2_M_Label_TextChanged;
             // 
             // HSV2_ML_Label
             // 
@@ -686,7 +658,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV2_ML_Label.Size = new Size(317, 47);
             HSV2_ML_Label.TabIndex = 55;
             HSV2_ML_Label.Text = "Middle Left Pixel Count";
-            //HSV2_ML_Label.TextChanged += HSV2_ML_Label_TextChanged;
             // 
             // HSV2_FL_Label
             // 
@@ -695,7 +666,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV2_FL_Label.Size = new Size(263, 47);
             HSV2_FL_Label.TabIndex = 54;
             HSV2_FL_Label.Text = "Far Left Pixel Count";
-            //HSV2_FL_Label.TextChanged += HSV2_FL_Label_TextChanged;
             // 
             // HSV2_FR
             // 
@@ -705,7 +675,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV2_FR.Size = new Size(127, 41);
             HSV2_FR.TabIndex = 53;
             HSV2_FR.Text = "FarRight";
-            //HSV2_FR.Click += HSV2_FR_Click;
             // 
             // HSV2_MR
             // 
@@ -715,7 +684,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV2_MR.Size = new Size(181, 41);
             HSV2_MR.TabIndex = 52;
             HSV2_MR.Text = "MiddleRight";
-            //HSV2_MR.Click += HSV2_MR_Click;
             // 
             // HSV2_M
             // 
@@ -725,7 +693,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV2_M.Size = new Size(111, 41);
             HSV2_M.TabIndex = 51;
             HSV2_M.Text = "Middle";
-            //HSV2_M.Click += HSV2_M_Click;
             // 
             // HSV2_ML
             // 
@@ -735,7 +702,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV2_ML.Size = new Size(160, 41);
             HSV2_ML.TabIndex = 50;
             HSV2_ML.Text = "MiddleLeft";
-            //HSV2_ML.Click += HSV2_ML_Click;
             // 
             // HSV2_FL
             // 
@@ -745,7 +711,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV2_FL.Size = new Size(106, 41);
             HSV2_FL.TabIndex = 49;
             HSV2_FL.Text = "FarLeft";
-            //HSV2_FL.Click += HSV2_FL_Click;
             // 
             // HSV2_Text
             // 
@@ -754,7 +719,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV2_Text.Size = new Size(239, 47);
             HSV2_Text.TabIndex = 48;
             HSV2_Text.Text = "HSV Modification";
-            //HSV2_Text.TextChanged += HSV2_Text_TextChanged;
             // 
             // HSV2PictureBox
             // 
@@ -763,7 +727,6 @@ namespace UR1_Alyssa_Bloomfield
             HSV2PictureBox.Size = new Size(789, 560);
             HSV2PictureBox.TabIndex = 47;
             HSV2PictureBox.TabStop = false;
-            //HSV2PictureBox.Click += HSV2PictureBox_Click;
             // 
             // V2_Label
             // 
@@ -772,7 +735,6 @@ namespace UR1_Alyssa_Bloomfield
             V2_Label.Size = new Size(29, 47);
             V2_Label.TabIndex = 71;
             V2_Label.Text = "V";
-            //V2_Label.TextChanged += V2_Label_TextChanged;
             // 
             // S2_Label
             // 
@@ -781,7 +743,6 @@ namespace UR1_Alyssa_Bloomfield
             S2_Label.Size = new Size(29, 47);
             S2_Label.TabIndex = 70;
             S2_Label.Text = "S";
-            //S2_Label.TextChanged += S2_Label_TextChanged;
             // 
             // H2_Label
             // 
@@ -790,7 +751,6 @@ namespace UR1_Alyssa_Bloomfield
             H2_Label.Size = new Size(29, 47);
             H2_Label.TabIndex = 69;
             H2_Label.Text = "H";
-            //H2_Label.TextChanged += H2_Label_TextChanged;
             // 
             // VVal2Max
             // 
@@ -859,7 +819,6 @@ namespace UR1_Alyssa_Bloomfield
             V2PictureBox.Size = new Size(436, 281);
             V2PictureBox.TabIndex = 62;
             V2PictureBox.TabStop = false;
-            //V2PictureBox.Click += V2PictureBox_Click;
             // 
             // S2PictureBox
             // 
@@ -868,7 +827,6 @@ namespace UR1_Alyssa_Bloomfield
             S2PictureBox.Size = new Size(436, 281);
             S2PictureBox.TabIndex = 61;
             S2PictureBox.TabStop = false;
-            //S2PictureBox.Click += S2PictureBox_Click;
             // 
             // H2PictureBox
             // 
@@ -877,15 +835,14 @@ namespace UR1_Alyssa_Bloomfield
             H2PictureBox.Size = new Size(436, 281);
             H2PictureBox.TabIndex = 60;
             H2PictureBox.TabStop = false;
-            //H2PictureBox.Click += H2PictureBox_Click;
             // 
             // Serial
             // 
-            Serial.Location = new Point(2826, 1585);
+            Serial.Location = new Point(2810, 1622);
             Serial.Name = "Serial";
-            Serial.Size = new Size(250, 47);
+            Serial.Size = new Size(272, 47);
             Serial.TabIndex = 72;
-            //Serial.TextChanged += Serial_TextChanged;
+            Serial.Text = "Serial Value Display";
             // 
             // Form1
             // 
@@ -1542,6 +1499,7 @@ namespace UR1_Alyssa_Bloomfield
                 //Displays serial information
                 Invoke(new Action(() =>
                 {
+                    int serialTransmission = SerialFunction();
                     Serial.Text = $"SValue: {serialTransmission}";
                     SendSerial(serialTransmission);
                 }));
@@ -1552,21 +1510,19 @@ namespace UR1_Alyssa_Bloomfield
         //Function tells what value to send over the serial monitor
         int SerialFunction()
         {
-            //Far Left
-            if (whitePixelsFarLeftHSV > whitePixelsMidHSV)
-                serialTransmission = 1;
-
             //Mid Left
-            else if (whitePixelsMidLeftHSV > whitePixelsMidHSV)
+            if (whitePixelsMidLeftHSV > whitePixelsMidHSV)
                 serialTransmission = 2;
-
-            //Far Right
-            else if (whitePixelsFarRightHSV > whitePixelsMidHSV)
-                serialTransmission = 5;
-
             //Mid Right
             else if (whitePixelsMidRightHSV > whitePixelsMidHSV)
                 serialTransmission = 4;
+
+            //Far Left
+            else if (whitePixelsFarLeftHSV > whitePixelsMidHSV)
+                serialTransmission = 1;
+            //Far Right
+            else if (whitePixelsFarRightHSV > whitePixelsMidHSV)
+                serialTransmission = 5;
 
             //Red
             else if (whitePixelsMidHSV2 > whitePixelsFarLeftHSV2 && whitePixelsMidHSV2 > whitePixelsMidLeftHSV2 &&
@@ -1580,7 +1536,7 @@ namespace UR1_Alyssa_Bloomfield
             return serialTransmission;
         }
 
-        private void SendSerial(int serialTransmission)
+        private void SendSerial(int serialTransmisson)
         {
             byte[] buffer = new byte[1]
             {
