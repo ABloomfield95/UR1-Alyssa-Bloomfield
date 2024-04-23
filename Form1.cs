@@ -1511,17 +1511,21 @@ namespace UR1_Alyssa_Bloomfield
         int SerialFunction()
         {
             //Mid Left
-            if (whitePixelsMidLeftHSV > whitePixelsMidHSV)
+            if (      whitePixelsMidLeftHSV > whitePixelsFarLeftHSV && whitePixelsMidLeftHSV2 > whitePixelsMidHSV &&
+                     whitePixelsMidLeftHSV > whitePixelsFarRightHSV && whitePixelsMidLeftHSV > whitePixelsMidRightHSV)
                 serialTransmission = 2;
             //Mid Right
-            else if (whitePixelsMidRightHSV > whitePixelsMidHSV)
+            else if (whitePixelsMidRightHSV > whitePixelsFarLeftHSV  && whitePixelsMidRightHSV > whitePixelsMidLeftHSV &&
+                     whitePixelsMidRightHSV > whitePixelsFarRightHSV && whitePixelsMidRightHSV > whitePixelsMidHSV)
                 serialTransmission = 4;
 
             //Far Left
-            else if (whitePixelsFarLeftHSV > whitePixelsMidHSV)
+            else if (whitePixelsFarLeftHSV > whitePixelsMidLeftHSV  && whitePixelsFarLeftHSV > whitePixelsMidHSV &&
+                     whitePixelsFarLeftHSV > whitePixelsFarRightHSV && whitePixelsFarLeftHSV > whitePixelsMidRightHSV)
                 serialTransmission = 1;
             //Far Right
-            else if (whitePixelsFarRightHSV > whitePixelsMidHSV)
+            else if (whitePixelsFarRightHSV > whitePixelsFarLeftHSV && whitePixelsFarRightHSV > whitePixelsMidLeftHSV &&
+                     whitePixelsFarRightHSV > whitePixelsMidHSV     && whitePixelsFarRightHSV > whitePixelsMidRightHSV)
                 serialTransmission = 5;
 
             //Red
@@ -1536,11 +1540,11 @@ namespace UR1_Alyssa_Bloomfield
             return serialTransmission;
         }
 
-        private void SendSerial(int serialTransmisson)
+        private void SendSerial(int data)
         {
             byte[] buffer = new byte[1]
             {
-                Convert.ToByte(serialTransmission),
+                Convert.ToByte(data),
             };
             sPort.Write(buffer, 0, buffer.Length);
         }
