@@ -138,6 +138,10 @@ namespace UR1_Alyssa_Bloomfield
         int serialTransmission = 0;
         private TextBox Serial;
 
+        //Red Pixels
+        int redPixels = 0;
+        private TextBox RedPixelCount;
+        private Label RPC;
 
         public Form1()
         {
@@ -216,6 +220,8 @@ namespace UR1_Alyssa_Bloomfield
             S2PictureBox = new PictureBox();
             H2PictureBox = new PictureBox();
             Serial = new TextBox();
+            RedPixelCount = new TextBox();
+            RPC = new Label();
             ((System.ComponentModel.ISupportInitialize)VideoPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)GrayPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)MinTrackBar).BeginInit();
@@ -838,15 +844,34 @@ namespace UR1_Alyssa_Bloomfield
             // 
             // Serial
             // 
-            Serial.Location = new Point(2810, 1622);
+            Serial.Location = new Point(3024, 1562);
             Serial.Name = "Serial";
             Serial.Size = new Size(272, 47);
             Serial.TabIndex = 72;
             Serial.Text = "Serial Value Display";
             // 
+            // RedPixelCount
+            // 
+            RedPixelCount.Location = new Point(2528, 1544);
+            RedPixelCount.Name = "RedPixelCount";
+            RedPixelCount.Size = new Size(312, 47);
+            RedPixelCount.TabIndex = 73;
+            RedPixelCount.Text = "Total Red Pixels";
+            // 
+            // RPC
+            // 
+            RPC.AutoSize = true;
+            RPC.Location = new Point(2528, 1594);
+            RPC.Name = "RPC";
+            RPC.Size = new Size(69, 41);
+            RPC.TabIndex = 74;
+            RPC.Text = "Red";
+            // 
             // Form1
             // 
             ClientSize = new Size(3498, 1775);
+            Controls.Add(RPC);
+            Controls.Add(RedPixelCount);
             Controls.Add(Serial);
             Controls.Add(V2_Label);
             Controls.Add(S2_Label);
@@ -1137,6 +1162,7 @@ namespace UR1_Alyssa_Bloomfield
             {
                 Mat mOriginalImage = mCapture.QueryFrame(); //grab a new frame
                 Mat GrayFrame = mOriginalImage.Clone();
+                Mat HSVFrame = mOriginalImage.Clone();
                 Mat HSV2Frame = mOriginalImage.Clone();
 
                 if (mOriginalImage == null)
@@ -1265,11 +1291,9 @@ namespace UR1_Alyssa_Bloomfield
                 }));
 
                 //HSV Code
+                CvInvoke.CvtColor(mOriginalImage, HSVFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Hsv);
 
-                Mat hsvFrame = new Mat();
-                CvInvoke.CvtColor(mOriginalImage, hsvFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Hsv);
-
-                Mat[] hsvChannels = hsvFrame.Split();
+                Mat[] hsvChannels = HSVFrame.Split();
 
                 Mat hueFilter = new Mat();
                 CvInvoke.InRange(hsvChannels[0], new ScalarArray(hMin), new ScalarArray(hMax), hueFilter);
@@ -1294,9 +1318,9 @@ namespace UR1_Alyssa_Bloomfield
                 //Far Left Pixels - HSV
                 //int whitePixelsFarLeftHSV = 0;
                 Image<Gray, byte> imgHSV = mergedImage.ToImage<Gray, byte>();
-                for (int x = 0; x < mOriginalImage.Width / 5; x++)
+                for (int x = 0; x < HSVFrame.Width / 5; x++)
                 {
-                    for (int y = 0; mOriginalImage.Height > y; y++)
+                    for (int y = 0; HSVFrame.Height > y; y++)
                     {
                         if (imgHSV.Data[y, x, 0] == 255)
                             whitePixelsFarLeftHSV++;
@@ -1312,9 +1336,9 @@ namespace UR1_Alyssa_Bloomfield
                 //Mid Left Pixels - HSV
                 //int whitePixelsMidLeftHSV = 0;
                 Image<Gray, byte> img2HSV = mergedImage.ToImage<Gray, byte>();
-                for (int x = mOriginalImage.Width / 5; x < 2 * (mOriginalImage.Width / 5); x++)
+                for (int x = HSVFrame.Width / 5; x < 2 * (HSVFrame.Width / 5); x++)
                 {
-                    for (int y = 0; mOriginalImage.Height > y; y++)
+                    for (int y = 0; HSVFrame.Height > y; y++)
                     {
                         if (img2HSV.Data[y, x, 0] == 255)
                             whitePixelsMidLeftHSV++;
@@ -1330,9 +1354,9 @@ namespace UR1_Alyssa_Bloomfield
                 //Middle Pixels  - HSV
                 //int whitePixelsMidHSV = 0;
                 Image<Gray, byte> img3HSV = mergedImage.ToImage<Gray, byte>();
-                for (int x = 2 * (mOriginalImage.Width / 5); x < 3 * (mOriginalImage.Width / 5); x++)
+                for (int x = 2 * (HSVFrame.Width / 5); x < 3 * (HSVFrame.Width / 5); x++)
                 {
-                    for (int y = 0; mOriginalImage.Height > y; y++)
+                    for (int y = 0; HSVFrame.Height > y; y++)
                     {
                         if (img3HSV.Data[y, x, 0] == 255)
                         { whitePixelsMidHSV++; }
@@ -1348,9 +1372,9 @@ namespace UR1_Alyssa_Bloomfield
                 //Mid Right Pixels  - HSV
                 //int whitePixelsMidRightHSV = 0;
                 Image<Gray, byte> img4HSV = mergedImage.ToImage<Gray, byte>();
-                for (int x = 3 * (mOriginalImage.Width / 5); x < 4 * (mOriginalImage.Width / 5); x++)
+                for (int x = 3 * (HSVFrame.Width / 5); x < 4 * (HSVFrame.Width / 5); x++)
                 {
-                    for (int y = 0; mOriginalImage.Height > y; y++)
+                    for (int y = 0; HSVFrame.Height > y; y++)
                     {
                         if (img4HSV.Data[y, x, 0] == 255)
                         { whitePixelsMidRightHSV++; }
@@ -1366,9 +1390,9 @@ namespace UR1_Alyssa_Bloomfield
                 //Far Right Pixels  - HSV
                 //int whitePixelsFarRightHSV = 0;
                 Image<Gray, byte> img5HSV = mergedImage.ToImage<Gray, byte>();
-                for (int x = 5 * (mOriginalImage.Width / 5); x < mOriginalImage.Width; x++)
+                for (int x = 4 * (HSVFrame.Width / 5); x < 5*(HSVFrame.Width/5); x++)
                 {
-                    for (int y = 0; mOriginalImage.Height > y; y++)
+                    for (int y = 0; HSVFrame.Height > y; y++)
                     {
                         if (img5HSV.Data[y, x, 0] == 255)
                             whitePixelsFarRightHSV++;
@@ -1482,7 +1506,7 @@ namespace UR1_Alyssa_Bloomfield
                 //Far Right Pixels  - HSV
                 //int whitePixelsFarRightHSV2 = 0;
                 Image<Gray, byte> img5HSV2 = mergedImage2.ToImage<Gray, byte>();
-                for (int x = 5 * (HSV2Frame.Width / 5); x < HSV2Frame.Width; x++)
+                for (int x = 4 * (HSV2Frame.Width / 5); x < 5 * (HSV2Frame.Width/5); x++)
                 {
                     for (int y = 0; HSV2Frame.Height > y; y++)
                     {
@@ -1502,6 +1526,14 @@ namespace UR1_Alyssa_Bloomfield
                     int serialTransmission = SerialFunction();
                     Serial.Text = $"SValue: {serialTransmission}";
                     SendSerial(serialTransmission);
+                }));
+
+                redPixels = whitePixelsFarLeftHSV2 + whitePixelsMidLeftHSV2 + whitePixelsMidHSV2
+                                + whitePixelsMidRightHSV2 + whitePixelsFarRightHSV2;
+
+                Invoke(new Action(() =>
+                {
+                    RPC.Text = $"{redPixels} White Pixels";
                 }));
 
             } //while loop closer
@@ -1529,8 +1561,7 @@ namespace UR1_Alyssa_Bloomfield
                 serialTransmission = 5;
 
             //Red
-            else if (whitePixelsMidHSV2 > whitePixelsFarLeftHSV2 && whitePixelsMidHSV2 > whitePixelsMidLeftHSV2 &&
-                     whitePixelsMidHSV2 > whitePixelsFarRightHSV2 && whitePixelsMidHSV2 > whitePixelsMidRightHSV2)
+            else if (redPixels > 1000)
                 serialTransmission = 6;
 
             //Middle
@@ -1565,6 +1596,5 @@ namespace UR1_Alyssa_Bloomfield
                 sPort.Close();
             }
         }
-
     } //public partial class Form1 parathensis
 } //namespace parathensis
