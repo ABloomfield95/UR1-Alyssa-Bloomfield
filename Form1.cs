@@ -977,7 +977,7 @@ namespace UR1_Alyssa_Bloomfield
             try
             {
                 //Initailize with the plugged camera
-                mCapture = new VideoCapture(0);
+                mCapture = new VideoCapture(1);
 
                 if (mCapture.Height == 0)
                     throw new Exception("No Cameras Found");
@@ -1543,7 +1543,7 @@ namespace UR1_Alyssa_Bloomfield
         int SerialFunction()
         {
             //Mid Left
-            if (      whitePixelsMidLeftHSV > whitePixelsFarLeftHSV && whitePixelsMidLeftHSV2 > whitePixelsMidHSV &&
+            if (      whitePixelsMidLeftHSV > whitePixelsFarLeftHSV && whitePixelsMidLeftHSV > whitePixelsMidHSV &&
                      whitePixelsMidLeftHSV > whitePixelsFarRightHSV && whitePixelsMidLeftHSV > whitePixelsMidRightHSV)
                 serialTransmission = 2;
             //Mid Right
@@ -1561,7 +1561,7 @@ namespace UR1_Alyssa_Bloomfield
                 serialTransmission = 5;
 
             //Red
-            else if (redPixels > 3000)
+            else if (redPixels > 8000)
                 serialTransmission = 6;
 
             //Middle
