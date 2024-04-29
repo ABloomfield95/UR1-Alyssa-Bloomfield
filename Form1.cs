@@ -407,12 +407,12 @@ namespace UR1_Alyssa_Bloomfield
             // 
             // HValMin
             // 
-            HValMin.Location = new Point(2502, 330);
+            HValMin.Location = new Point(2516, 330);
             HValMin.Maximum = 179;
             HValMin.Name = "HValMin";
             HValMin.Size = new Size(338, 114);
             HValMin.TabIndex = 22;
-            HValMin.Value = 100;
+            HValMin.Value = 10;
             HValMin.Scroll += HValueMin_Scroll;
             // 
             // HValMax
@@ -422,7 +422,7 @@ namespace UR1_Alyssa_Bloomfield
             HValMax.Name = "HValMax";
             HValMax.Size = new Size(338, 114);
             HValMax.TabIndex = 23;
-            HValMax.Value = 100;
+            HValMax.Value = 40;
             HValMax.Scroll += HValMax_Scroll;
             // 
             // SValMin
@@ -432,7 +432,7 @@ namespace UR1_Alyssa_Bloomfield
             SValMin.Name = "SValMin";
             SValMin.Size = new Size(338, 114);
             SValMin.TabIndex = 24;
-            SValMin.Value = 100;
+            SValMin.Value = 95;
             SValMin.Scroll += SValMin_Scroll;
             // 
             // SValMax
@@ -442,7 +442,7 @@ namespace UR1_Alyssa_Bloomfield
             SValMax.Name = "SValMax";
             SValMax.Size = new Size(338, 114);
             SValMax.TabIndex = 25;
-            SValMax.Value = 100;
+            SValMax.Value = 245;
             SValMax.Scroll += SValMax_Scroll;
             // 
             // VValMin
@@ -452,7 +452,7 @@ namespace UR1_Alyssa_Bloomfield
             VValMin.Name = "VValMin";
             VValMin.Size = new Size(338, 114);
             VValMin.TabIndex = 26;
-            VValMin.Value = 100;
+            VValMin.Value = 150;
             VValMin.Scroll += VValMin_Scroll;
             // 
             // VValMax
@@ -462,7 +462,7 @@ namespace UR1_Alyssa_Bloomfield
             VValMax.Name = "VValMax";
             VValMax.Size = new Size(338, 114);
             VValMax.TabIndex = 27;
-            VValMax.Value = 100;
+            VValMax.Value = 250;
             VValMax.Scroll += VValMax_Scroll;
             // 
             // RI_Text
@@ -785,7 +785,7 @@ namespace UR1_Alyssa_Bloomfield
             SVal2Max.Name = "SVal2Max";
             SVal2Max.Size = new Size(338, 114);
             SVal2Max.TabIndex = 66;
-            SVal2Max.Value = 100;
+            SVal2Max.Value = 255;
             SVal2Max.Scroll += SVal2Max_Scroll;
             // 
             // SVal2Min
@@ -795,7 +795,7 @@ namespace UR1_Alyssa_Bloomfield
             SVal2Min.Name = "SVal2Min";
             SVal2Min.Size = new Size(338, 114);
             SVal2Min.TabIndex = 65;
-            SVal2Min.Value = 100;
+            SVal2Min.Value = 180;
             SVal2Min.Scroll += SVal2Min_Scroll;
             // 
             // HVal2Max
@@ -805,7 +805,7 @@ namespace UR1_Alyssa_Bloomfield
             HVal2Max.Name = "HVal2Max";
             HVal2Max.Size = new Size(338, 114);
             HVal2Max.TabIndex = 64;
-            HVal2Max.Value = 100;
+            HVal2Max.Value = 178;
             HVal2Max.Scroll += HVal2Max_Scroll;
             // 
             // HVal2Min
@@ -815,7 +815,7 @@ namespace UR1_Alyssa_Bloomfield
             HVal2Min.Name = "HVal2Min";
             HVal2Min.Size = new Size(338, 114);
             HVal2Min.TabIndex = 63;
-            HVal2Min.Value = 100;
+            HVal2Min.Value = 160;
             HVal2Min.Scroll += HVal2Min_Scroll;
             // 
             // V2PictureBox
@@ -1561,7 +1561,7 @@ namespace UR1_Alyssa_Bloomfield
                 serialTransmission = 5;
 
             //Red
-            else if (redPixels > 1000)
+            else if (redPixels > 3000)
                 serialTransmission = 6;
 
             //Middle
