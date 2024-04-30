@@ -1561,7 +1561,7 @@ namespace UR1_Alyssa_Bloomfield
                 serialTransmission = 5;
 
             //Red
-            else if (redPixels > 8000)
+            else if (redPixels > 20000)
                 serialTransmission = 6;
 
             //Middle
